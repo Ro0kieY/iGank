@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">iGank</string>
+
+    <string name="activity_image_trans">activity_image_trans</string>
+</resources>
