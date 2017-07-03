@@ -27,4 +27,13 @@
 
         </android.support.v4.widget.SwipeRefreshLayout>
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:layout_margin="30dp"
+            android:backgroundTint="@color/lightGreen"
+            android:src="@mipmap/ic_arrow_up"/>
+
 </android.support.design.widget.CoordinatorLayout>

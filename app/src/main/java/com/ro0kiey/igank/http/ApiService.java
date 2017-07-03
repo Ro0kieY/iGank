@@ -5,7 +5,6 @@ import com.ro0kiey.igank.model.Meizi;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 /**
  * Created by Ro0kieY on 2017/6/30.

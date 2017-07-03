@@ -1,7 +1,5 @@
 package com.ro0kiey.igank.model;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
