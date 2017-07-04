@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.ro0kiey.igank.Config;
 import com.ro0kiey.igank.R;
-import com.ro0kiey.igank.SharedElement;
-import com.ro0kiey.igank.model.MeiziBean;
+import com.ro0kiey.igank.model.Bean.MeiziBean;
 import com.ro0kiey.igank.ui.Activity.MeiziActivity;
 
 import java.util.List;
@@ -30,11 +30,9 @@ public class MeiziAdapter extends RecyclerView.Adapter<MeiziAdapter.ViewHolder> 
 
     private List<MeiziBean> mMeiziList;
     private Context mContext;
-    private RecyclerView mRecyclerView;
 
-    public MeiziAdapter(List<MeiziBean> mMeiziList, RecyclerView mRecyclerView) {
+    public MeiziAdapter(List<MeiziBean> mMeiziList) {
         this.mMeiziList = mMeiziList;
-        this.mRecyclerView = mRecyclerView;
     }
 
     @Override
@@ -48,11 +46,23 @@ public class MeiziAdapter extends RecyclerView.Adapter<MeiziAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        MeiziBean meizi = mMeiziList.get(position);
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        final MeiziBean meizi = mMeiziList.get(position);
         holder.textView.setText(meizi.getCreatedAt());
-        Glide.with(mContext).load(meizi.getUrl()).into(holder.imageView);
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String meiziUrl = meizi.getUrl();
+                Intent intent = new Intent(mContext, MeiziActivity.class);
+                intent.putExtra("Url", meiziUrl);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity)mContext, v, Config.ACTIVITY_IMAGE_TRANS);
+                ActivityCompat.startActivity(mContext, intent, options.toBundle());
+            }
+        });
+        Glide.with(mContext).load(meizi.getUrl()).centerCrop().into(holder.imageView);
         runEnterAnimation(holder.itemView, position);
+
+        Log.d("on Debug", "position " + position + "run EnterAnimation");
     }
 
     @Override
@@ -65,19 +75,10 @@ public class MeiziAdapter extends RecyclerView.Adapter<MeiziAdapter.ViewHolder> 
         ImageView imageView;
         TextView textView;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(final View itemView) {
             super(itemView);
             imageView = (ImageView) itemView.findViewById(R.id.rv_meizi_image);
             textView = (TextView)itemView.findViewById(R.id.rv_meizi_text);
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    SharedElement.shareDrawable = imageView.getDrawable();
-                    Intent intent = new Intent(mContext, MeiziActivity.class);
-                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity)mContext, imageView, Config.ACTIVITY_IMAGE_TRANS);
-                    ActivityCompat.startActivity(mContext, intent, options.toBundle());
-                }
-            });
         }
     }
 

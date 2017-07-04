@@ -1,5 +1,7 @@
 package com.ro0kiey.igank.model;
 
+import com.ro0kiey.igank.model.Bean.MeiziBean;
+
 import java.util.List;
 
 /**

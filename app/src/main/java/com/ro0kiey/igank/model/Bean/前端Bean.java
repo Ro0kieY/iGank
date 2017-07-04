@@ -1,35 +1,39 @@
-package com.ro0kiey.igank.model;
+package com.ro0kiey.igank.model.Bean;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
- * Created by Ro0kieY on 2017/6/30.
+ * Created by Ro0kieY on 2017/7/5.
  */
 
-public class MeiziBean {
+public class 前端Bean {
 
         /**
-         * _id : 5941db7b421aa92c794633cd
-         * createdAt : 2017-06-15T08:57:31.47Z
-         * desc : 6-15
-         * publishedAt : 2017-06-15T13:55:57.947Z
-         * source : chrome
-         * type : 福利
-         * url : https://ws1.sinaimg.cn/large/610dc034ly1fgllsthvu1j20u011in1p.jpg
+         * _id : 5955f036421aa90ca209c3d8
+         * createdAt : 2017-06-30T14:31:18.374Z
+         * desc : Aurora IMUI，一个通用的即时通讯库。不局限于任何 IM SDK，现在已经支持 React Native。Github 近两千 star，炒鸡好用的！
+         * images : ["http://img.gank.io/f61b2422-d35c-4b08-98ed-30b54788f82d"]
+         * publishedAt : 2017-07-04T11:50:36.484Z
+         * source : web
+         * type : 前端
+         * url : http://y0.cn/gank
          * used : true
-         * who : 代码家
+         * who : null
          */
 
         @SerializedName("_id")
-        public String id;
-        public String createdAt;
-        public String desc;
-        public String publishedAt;
-        public String source;
-        public String type;
-        public String url;
-        public boolean used;
-        public String who;
+        private String id;
+        private String createdAt;
+        private String desc;
+        private String publishedAt;
+        private String source;
+        private String type;
+        private String url;
+        private boolean used;
+        private Object who;
+        private List<String> images;
 
         public String getId() {
             return id;
@@ -95,26 +99,20 @@ public class MeiziBean {
             this.used = used;
         }
 
-        public String getWho() {
+        public Object getWho() {
             return who;
         }
 
-        public void setWho(String who) {
+        public void setWho(Object who) {
             this.who = who;
         }
 
-    @Override
-    public String toString() {
-        return "MeiziBean{" +
-                "id='" + id + '\'' +
-                ", createdAt='" + createdAt + '\'' +
-                ", desc='" + desc + '\'' +
-                ", publishedAt='" + publishedAt + '\'' +
-                ", source='" + source + '\'' +
-                ", type='" + type + '\'' +
-                ", url='" + url + '\'' +
-                ", used=" + used +
-                ", who='" + who + '\'' +
-                '}';
-    }
+        public List<String> getImages() {
+            return images;
+        }
+
+        public void setImages(List<String> images) {
+            this.images = images;
+        }
+
 }

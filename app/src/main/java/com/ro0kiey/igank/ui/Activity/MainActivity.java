@@ -1,5 +1,6 @@
 package com.ro0kiey.igank.ui.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -7,6 +8,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -15,7 +18,7 @@ import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.adapter.MeiziAdapter;
 import com.ro0kiey.igank.http.RetrofitClient;
 import com.ro0kiey.igank.model.Meizi;
-import com.ro0kiey.igank.model.MeiziBean;
+import com.ro0kiey.igank.model.Bean.MeiziBean;
 import com.ro0kiey.igank.ui.base.BaseActivity;
 
 import java.util.ArrayList;
@@ -44,7 +47,7 @@ public class MainActivity extends BaseActivity {
         layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         rv_meizi.setLayoutManager(layoutManager);
         meiziList = new ArrayList<>();
-        adapter = new MeiziAdapter(meiziList, rv_meizi);
+        adapter = new MeiziAdapter(meiziList);
         rv_meizi.addOnScrollListener(getLoadMoreListener(layoutManager));
 
         fab = (FloatingActionButton)findViewById(R.id.fab);
@@ -67,6 +70,23 @@ public class MainActivity extends BaseActivity {
         getMeiziData(Config.LOAD_IMAGE_COUNT, Config.LOAD_IMAGE_PAGE);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.about:
+                Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+                startActivity(intent);
+                break;
+        }
+        return false;
+    }
+
     private RecyclerView.OnScrollListener getLoadMoreListener(final StaggeredGridLayoutManager manager) {
         return new RecyclerView.OnScrollListener() {
             int imageCount = Config.LOAD_IMAGE_COUNT;
@@ -75,7 +95,7 @@ public class MainActivity extends BaseActivity {
                 Log.d("onScrolled", "dy " + dy);
                 int[] lastPostition = new int[2];
                 manager.findLastVisibleItemPositions(lastPostition);
-                if (lastPostition[1] >= adapter.getItemCount() - 2){
+                if (lastPostition[1] >= adapter.getItemCount() - 3){
                     imageCount += Config.LOAD_IMAGE_COUNT;
                     loadMoreMeizi(imageCount, Config.LOAD_IMAGE_PAGE);
                 }
@@ -89,6 +109,7 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public List<MeiziBean> apply(Meizi meizi) throws Exception {
                         Log.d("MainActivity", "apply: " + meizi.results.size() + meizi.toString());
+                        //meiziList.clear();
                         meiziList = addMoreMeizi(meizi);
                         return meiziList;
                     }
@@ -98,12 +119,12 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void accept(@NonNull List<MeiziBean> resultsBean) throws Exception {
                         Log.d("MainActivity", "loadmore");
-                        adapter.notifyDataSetChanged();
+                        adapter.notifyItemRangeChanged(meiziList.size() - Config.LOAD_IMAGE_COUNT, Config.LOAD_IMAGE_COUNT);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@NonNull Throwable throwable) throws Exception {
-                        Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "loadMore Error", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -128,7 +149,7 @@ public class MainActivity extends BaseActivity {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@NonNull Throwable throwable) throws Exception {
-                        Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "refresh Error", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -146,7 +167,7 @@ public class MainActivity extends BaseActivity {
                 .subscribe(new Consumer<List<MeiziBean>>() {
                     @Override
                     public void accept(@NonNull List<MeiziBean> resultsBean) throws Exception {
-                        adapter = new MeiziAdapter(resultsBean, rv_meizi);
+                        adapter = new MeiziAdapter(resultsBean);
                         rv_meizi.setAdapter(adapter);
                     }
                 }, new Consumer<Throwable>() {
@@ -179,9 +200,10 @@ public class MainActivity extends BaseActivity {
         return meiziList;
     }
 
+
     private List<MeiziBean> addMoreMeizi(Meizi meizi) {
         if (meizi != null){
-            for (int i = (meizi.results.size() - 1); i > meizi.results.size() - Config.LOAD_IMAGE_COUNT + 1; i--){
+            for (int i = meizi.results.size() - Config.LOAD_IMAGE_COUNT; i < meizi.results.size(); i++){
                 meiziList.add(meizi.results.get(i));
             }
         }
