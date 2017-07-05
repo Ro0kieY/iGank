@@ -3,9 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
+    <item android:id="@+id/refresh"
+        android:title="Refresh"
+        android:icon="@mipmap/ic_refresh_grey600_36dp"
+        app:showAsAction="always"/>
+
     <item android:id="@+id/about"
         android:title="About me"
-        app:showAsAction="never"
-        />
+        app:showAsAction="never" />
 
 </menu>

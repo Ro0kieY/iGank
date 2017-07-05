@@ -38,7 +38,7 @@ public class MainActivity extends BaseActivity {
     private MeiziAdapter adapter;
     private FloatingActionButton fab;
     private StaggeredGridLayoutManager layoutManager;
-    private int mImageCount = Config.LOAD_IMAGE_COUNT;;
+    private int mImageCount = Config.LOAD_IMAGE_COUNT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +84,11 @@ public class MainActivity extends BaseActivity {
                 Intent intent = new Intent(MainActivity.this, AboutActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.refresh:
+                refreshMeiziData(Config.LOAD_IMAGE_COUNT, Config.LOAD_IMAGE_PAGE);
+                break;
+            default:
+                break;
         }
         return false;
     }
@@ -95,7 +100,7 @@ public class MainActivity extends BaseActivity {
                 Log.d("onScrolled", "dy " + dy);
                 int[] lastPostition = new int[2];
                 manager.findLastVisibleItemPositions(lastPostition);
-                if (lastPostition[1] >= adapter.getItemCount() - 3){
+                if (lastPostition[1] == adapter.getItemCount() - 1){
                     mImageCount += Config.LOAD_IMAGE_COUNT;
                     loadMoreMeizi(mImageCount, Config.LOAD_IMAGE_PAGE);
                 }
@@ -103,15 +108,14 @@ public class MainActivity extends BaseActivity {
         };
     }
 
-    private void loadMoreMeizi(int count, int page) {
+    private void loadMoreMeizi(final int count, int page) {
         RetrofitClient.getApiServiceInstance().getMeiziData(count, page)
                 .map(new Function<Meizi, List<MeiziBean>>() {
                     @Override
                     public List<MeiziBean> apply(Meizi meizi) throws Exception {
                         Log.d("MainActivity", "apply: " + meizi.results.size() + meizi.toString());
-                        //meiziList.clear();
-                        meiziList = addMoreMeizi(meizi);
-                        return meiziList;
+                        meiziList.clear();
+                        return addAllMeizi(meizi);
                     }
                 }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -119,6 +123,7 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void accept(@NonNull List<MeiziBean> resultsBean) throws Exception {
                         Log.d("MainActivity", "loadmore");
+                        //adapter.notifyDataSetChanged();
                         adapter.notifyItemRangeChanged(meiziList.size() - Config.LOAD_IMAGE_COUNT, Config.LOAD_IMAGE_COUNT);
                     }
                 }, new Consumer<Throwable>() {
@@ -129,15 +134,15 @@ public class MainActivity extends BaseActivity {
                 });
     }
 
-    private void refreshMeiziData(int count, int page) {
+    private void refreshMeiziData(final int count, int page) {
         RetrofitClient.getApiServiceInstance().getMeiziData(count, page)
                 .map(new Function<Meizi, List<MeiziBean>>() {
                     @Override
                     public List<MeiziBean> apply(Meizi meizi) throws Exception {
                         Log.d("MainActivity", "apply: " + meizi.results.size() + meizi.toString());
                         meiziList.clear();
-                        meiziList = addAllMeizi(meizi);
-                        return meiziList;
+                        mImageCount = Config.LOAD_IMAGE_COUNT;
+                        return addAllMeizi(meizi);
                     }
                 }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -145,7 +150,6 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void accept(@NonNull List<MeiziBean> resultsBean) throws Exception {
                         adapter.notifyDataSetChanged();
-                        mImageCount = Config.LOAD_IMAGE_COUNT;
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -161,7 +165,7 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public List<MeiziBean> apply(Meizi meizi) throws Exception {
                         Log.d("MainActivity", "apply: " + meizi.toString());
-                        return meiziList = addAllMeizi(meizi);
+                        return addAllMeizi(meizi);
                     }
                 }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

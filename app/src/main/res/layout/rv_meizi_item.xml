@@ -21,13 +21,43 @@
              android:scaleType="centerCrop"
              />
 
-         <TextView
-             android:id="@+id/rv_meizi_text"
+         <RelativeLayout
+             android:id="@+id/text_layout"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
-             android:textSize="15dp"
-             android:layout_margin="5dp"
-             android:maxLines="3"/>
+             >
+
+             <TextView
+                 android:id="@+id/rv_meizi_text_who"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:textSize="15dp"
+                 android:layout_margin="5dp"
+                 android:textStyle="bold"
+                 android:maxLines="1"/>
+
+             <TextView
+                 android:id="@+id/rv_meizi_text_date"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_toRightOf="@+id/rv_meizi_text_who"
+                 android:layout_alignParentRight="true"
+                 android:textSize="15dp"
+                 android:layout_margin="5dp"
+                 android:gravity="end"
+                 android:maxLines="1"/>
+
+             <TextView
+                 android:id="@+id/rv_meizi_text_desc"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:textSize="15dp"
+                 android:layout_below="@+id/rv_meizi_text_who"
+                 android:layout_marginTop="5dp"
+                 android:maxLines="1"/>
+
+
+         </RelativeLayout>
 
     </LinearLayout>
 

@@ -12,7 +12,7 @@ import java.util.List;
  * Created by Ro0kieY on 2017/7/5.
  */
 
-public class DailGank {
+public class DailyGank {
 
     /**
      * category : ["前端","休息视频","Android","福利","iOS"]
