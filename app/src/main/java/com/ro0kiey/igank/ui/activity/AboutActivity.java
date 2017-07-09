@@ -1,4 +1,4 @@
-package com.ro0kiey.igank.ui.Activity;
+package com.ro0kiey.igank.ui.activity;
 
 import android.os.Build;
 import android.os.Bundle;

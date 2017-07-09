@@ -1,6 +1,7 @@
-package com.ro0kiey.igank.ui.Activity;
+package com.ro0kiey.igank.ui.activity;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.widget.ImageView;
 
@@ -9,24 +10,27 @@ import com.ro0kiey.igank.Config;
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.ui.base.BaseActivity;
 
-public class MeiziActivity extends BaseActivity {
+/**
+ * Created by Ro0kieY on 2017/7/5.
+ */
+
+public class GankActivity extends BaseActivity {
 
     private ImageView imageView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        imageView = (ImageView)findViewById(R.id.meizi_image);
+        imageView = (ImageView)findViewById(R.id.gank_image_view) ;
 
         ViewCompat.setTransitionName(imageView, Config.ACTIVITY_IMAGE_TRANS);
         String meiziUrl = getIntent().getStringExtra("Url");
-        Glide.with(this).load(meiziUrl).crossFade().into(imageView);
+        Glide.with(this).load(meiziUrl).centerCrop().into(imageView);
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_meizi;
+        return R.layout.activity_gank;
     }
-
 }

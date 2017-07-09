@@ -21,15 +21,15 @@ public class 休息视频Bean {
          */
 
         @SerializedName("_id")
-        private String id;
-        private String createdAt;
-        private String desc;
-        private String publishedAt;
-        private String source;
-        private String type;
-        private String url;
-        private boolean used;
-        private String who;
+        public String id;
+        public String createdAt;
+        public String desc;
+        public String publishedAt;
+        public String source;
+        public String type;
+        public String url;
+        public boolean used;
+        public String who;
 
         public String getId() {
             return id;
