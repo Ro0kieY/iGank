@@ -1,6 +1,7 @@
 package com.ro0kiey.igank.model;
 
 import com.ro0kiey.igank.model.Bean.AndroidBean;
+import com.ro0kiey.igank.model.Bean.GankBean;
 import com.ro0kiey.igank.model.Bean.IOSBean;
 import com.ro0kiey.igank.model.Bean.休息视频Bean;
 import com.ro0kiey.igank.model.Bean.前端Bean;
@@ -49,49 +50,76 @@ public class DailyGank {
     }
 
     public static class ResultsBean {
-        private List<AndroidBean> Android;
-        private List<IOSBean> iOS;
-        private List<休息视频Bean> 休息视频;
-        private List<前端Bean> 前端;
-        private List<福利Bean> 福利;
+        private List<GankBean> Android;
+        private List<GankBean> iOS;
+        private List<GankBean> 休息视频;
+        private List<GankBean> 前端;
+        private List<GankBean> 福利;
+        private List<GankBean> 拓展资源;
+        private List<GankBean> 瞎推荐;
+        private List<GankBean> APP;
 
-        public List<AndroidBean> getAndroid() {
+        public List<GankBean> get拓展资源() {
+            return 拓展资源;
+        }
+
+        public void set拓展资源(List<GankBean> 拓展资源) {
+            this.拓展资源 = 拓展资源;
+        }
+
+        public List<GankBean> get瞎推荐() {
+            return 瞎推荐;
+        }
+
+        public void set瞎推荐(List<GankBean> 瞎推荐) {
+            this.瞎推荐 = 瞎推荐;
+        }
+
+        public List<GankBean> getAPP() {
+            return APP;
+        }
+
+        public void setAPP(List<GankBean> APP) {
+            this.APP = APP;
+        }
+
+        public List<GankBean> getAndroid() {
             return Android;
         }
 
-        public void setAndroid(List<AndroidBean> Android) {
-            this.Android = Android;
+        public void setAndroid(List<GankBean> android) {
+            Android = android;
         }
 
-        public List<IOSBean> getIOS() {
+        public List<GankBean> getiOS() {
             return iOS;
         }
 
-        public void setIOS(List<IOSBean> iOS) {
+        public void setiOS(List<GankBean> iOS) {
             this.iOS = iOS;
         }
 
-        public List<休息视频Bean> get休息视频() {
+        public List<GankBean> get休息视频() {
             return 休息视频;
         }
 
-        public void set休息视频(List<休息视频Bean> 休息视频) {
+        public void set休息视频(List<GankBean> 休息视频) {
             this.休息视频 = 休息视频;
         }
 
-        public List<前端Bean> get前端() {
+        public List<GankBean> get前端() {
             return 前端;
         }
 
-        public void set前端(List<前端Bean> 前端) {
+        public void set前端(List<GankBean> 前端) {
             this.前端 = 前端;
         }
 
-        public List<福利Bean> get福利() {
+        public List<GankBean> get福利() {
             return 福利;
         }
 
-        public void set福利(List<福利Bean> 福利) {
+        public void set福利(List<GankBean> 福利) {
             this.福利 = 福利;
         }
     }

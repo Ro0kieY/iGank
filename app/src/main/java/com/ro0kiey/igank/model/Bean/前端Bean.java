@@ -32,7 +32,7 @@ public class 前端Bean {
         private String type;
         private String url;
         private boolean used;
-        private Object who;
+        private String who;
         private List<String> images;
 
         public String getId() {
@@ -99,11 +99,11 @@ public class 前端Bean {
             this.used = used;
         }
 
-        public Object getWho() {
+        public String getWho() {
             return who;
         }
 
-        public void setWho(Object who) {
+        public void setWho(String who) {
             this.who = who;
         }
 

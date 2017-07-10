@@ -51,7 +51,6 @@ public class MainActivity extends BaseActivity {
         layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         rv_meizi.setLayoutManager(layoutManager);
         meiziList = new ArrayList<>();
-        adapter = new MeiziAdapter(meiziList);
         rv_meizi.addOnScrollListener(getLoadMoreListener(layoutManager));
 
         fab = (FloatingActionButton)findViewById(R.id.fab);
