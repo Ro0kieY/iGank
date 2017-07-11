@@ -3,28 +3,13 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/lightGreen</item>
-        <item name="colorPrimaryDark">@color/lightBlue</item>
-        <item name="colorAccent">@color/lightPurple</item>
-        <item name="android:actionOverflowButtonStyle">@style/ToolbarOverFlow</item>
+        <item name="colorPrimary">@color/lightBlack</item>
+        <item name="colorPrimaryDark">@color/Black</item>
+        <item name="colorAccent">@color/silver</item>
     </style>
 
-    <style name="CollapsingToolbarTitleStyle"
-        parent="@android:style/TextAppearance">
+    <style name="CollapsingToolbarTitleStyle" parent="@android:style/TextAppearance">
         <item name="android:textColor">@android:color/transparent</item>
-    </style>
-
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="ToolbarOverFlow" parent="@android:style/Widget.ActionButton.Overflow">
-        <item name="android:src">@mipmap/ic_dots_vertical_grey600_36dp</item>
     </style>
 
 </resources>

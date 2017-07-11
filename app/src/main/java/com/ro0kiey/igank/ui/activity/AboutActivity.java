@@ -39,7 +39,7 @@ public class AboutActivity extends AppCompatActivity {
             }
         });
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            collapsingToolbar.setCollapsedTitleTextColor(getColor(R.color.titleColor));
+            collapsingToolbar.setCollapsedTitleTextColor(getColor(R.color.White));
         }
         Glide.with(this).load(R.mipmap.ic_launcher).into(imageView);
     }

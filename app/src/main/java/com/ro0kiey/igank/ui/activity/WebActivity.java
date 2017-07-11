@@ -2,6 +2,8 @@ package com.ro0kiey.igank.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -18,22 +20,29 @@ import com.ro0kiey.igank.ui.base.BaseActivity;
 public class WebActivity extends BaseActivity {
 
     private WebView webView;
+    private Toolbar toolbar;
+    private WebSettings settings;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
         initView();
-    }
 
-    private void initView() {
         webView = (WebView)findViewById(R.id.activity_web_view);
         String VideoUrl = getIntent().getStringExtra("VideoUrl");
         setWebViewSettings(webView, VideoUrl);
     }
 
+    private void initView() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        setSupportActionBar(toolbar);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
     private void setWebViewSettings(WebView webView, String Url) {
-        WebSettings settings = webView.getSettings();
+        settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setLoadWithOverviewMode(true);
         settings.setAppCacheEnabled(true);
