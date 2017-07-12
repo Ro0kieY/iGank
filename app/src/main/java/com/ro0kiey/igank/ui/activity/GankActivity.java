@@ -11,7 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -69,13 +69,14 @@ public class GankActivity extends BaseActivity {
 
         ViewCompat.setTransitionName(imageView, Config.ACTIVITY_IMAGE_TRANS);
         String meiziUrl = getIntent().getStringExtra("Url");
-        String data = getIntent().getStringExtra("data");
-        int year = Integer.valueOf(data.substring(0, 4));
+        String date = getIntent().getStringExtra("date");
+        int year = Integer.valueOf(date.substring(0, 4));
         Log.d("GankActivity", "year: " + year);
-        int month = Integer.valueOf(data.substring(5, 7));
+        int month = Integer.valueOf(date.substring(5, 7));
         Log.d("GankActivity", "month: " + month);
-        int day = Integer.valueOf(data.substring(8, 10));
+        int day = Integer.valueOf(date.substring(8, 10));
         Log.d("GankActivity", "day: " + day);
+        actionBar.setTitle(date.substring(0, 10));
         Glide.with(this).load(meiziUrl).centerCrop().into(imageView);
 
         rv_gank = (RecyclerView)findViewById(R.id.rv_gank);
@@ -115,6 +116,19 @@ public class GankActivity extends BaseActivity {
                     }
                 });
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     private List<GankBean> createGankBean(DailyGank dailyGank) {
         mGankBean = new ArrayList<>();

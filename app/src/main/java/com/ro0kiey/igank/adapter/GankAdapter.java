@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.model.Bean.GankBean;
 import com.ro0kiey.igank.ui.activity.GankDetailActivity;
+import com.ro0kiey.igank.ui.activity.ListActivity;
 
 import java.util.List;
 
@@ -57,6 +58,14 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.ViewHolder> {
             showType(holder, true);
         }
         holder.typeView.setText(gankBean.getType());
+        holder.typeView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent (v.getContext(), ListActivity.class);
+                intent.putExtra("type", gankBean.getType());
+                v.getContext().startActivity(intent);
+            }
+        });
 
         runEnterAnimation(holder.itemView, position);
     }

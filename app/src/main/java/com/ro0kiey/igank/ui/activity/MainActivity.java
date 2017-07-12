@@ -145,18 +145,18 @@ public class MainActivity extends BaseActivity {
 
 
        /* RetrofitClient.getApiServiceInstance().getMeiziData(count, page)
-                .map(new Function<Meizi, List<MeiziBean>>() {
+                .map(new Function<Meizi, TypeList<MeiziBean>>() {
                     @Override
-                    public List<MeiziBean> apply(Meizi meizi) throws Exception {
+                    public TypeList<MeiziBean> apply(Meizi meizi) throws Exception {
                         Log.d("MainActivity", "apply: " + meizi.results.size() + meizi.toString());
                         meiziList.clear();
                         return addAllMeizi(meizi, );
                     }
                 }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<MeiziBean>>() {
+                .subscribe(new Consumer<TypeList<MeiziBean>>() {
                     @Override
-                    public void accept(@NonNull List<MeiziBean> resultsBean) throws Exception {
+                    public void accept(@NonNull TypeList<MeiziBean> resultsBean) throws Exception {
                         Log.d("MainActivity", "loadmore");
                         //adapter.notifyDataSetChanged();
                         adapter.notifyItemRangeChanged(meiziList.size() - Config.LOAD_IMAGE_COUNT, Config.LOAD_IMAGE_COUNT);
@@ -209,9 +209,9 @@ public class MainActivity extends BaseActivity {
 
 
         /*RetrofitClient.getApiServiceInstance().getMeiziData(count, page)
-                .map(new Function<Meizi, List<MeiziBean>>() {
+                .map(new Function<Meizi, TypeList<MeiziBean>>() {
                     @Override
-                    public List<MeiziBean> apply(Meizi meizi) throws Exception {
+                    public TypeList<MeiziBean> apply(Meizi meizi) throws Exception {
                         Log.d("MainActivity", "apply: " + meizi.results.size() + meizi.toString());
                         meiziList.clear();
                         mImageCount = Config.LOAD_IMAGE_COUNT;
@@ -219,9 +219,9 @@ public class MainActivity extends BaseActivity {
                     }
                 }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<MeiziBean>>() {
+                .subscribe(new Consumer<TypeList<MeiziBean>>() {
                     @Override
-                    public void accept(@NonNull List<MeiziBean> resultsBean) throws Exception {
+                    public void accept(@NonNull TypeList<MeiziBean> resultsBean) throws Exception {
                         adapter.notifyDataSetChanged();
                     }
                 }, new Consumer<Throwable>() {
@@ -270,17 +270,17 @@ public class MainActivity extends BaseActivity {
 
 
         /*RetrofitClient.getApiServiceInstance().getMeiziData(count, page)
-                .map(new Function<Meizi, List<MeiziBean>>() {
+                .map(new Function<Meizi, TypeList<MeiziBean>>() {
                     @Override
-                    public List<MeiziBean> apply(Meizi meizi) throws Exception {
+                    public TypeList<MeiziBean> apply(Meizi meizi) throws Exception {
                         Log.d("MainActivity", "apply: " + meizi.toString());
                         return addAllMeizi(meizi);
                     }
                 }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<MeiziBean>>() {
+                .subscribe(new Consumer<TypeList<MeiziBean>>() {
                     @Override
-                    public void accept(@NonNull List<MeiziBean> resultsBean) throws Exception {
+                    public void accept(@NonNull TypeList<MeiziBean> resultsBean) throws Exception {
                         adapter = new MeiziAdapter(resultsBean);
                         rv_meizi.setAdapter(adapter);
                     }

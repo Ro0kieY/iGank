@@ -61,7 +61,7 @@ public class MeiziAdapter extends RecyclerView.Adapter<MeiziAdapter.ViewHolder> 
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, GankActivity.class);
-                intent.putExtra("data", meizi.getPublishedAt());
+                intent.putExtra("date", meizi.getPublishedAt());
                 intent.putExtra("Url", meizi.getUrl());
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity)mContext, holder.imageView, Config.ACTIVITY_IMAGE_TRANS);
                 ActivityCompat.startActivity(mContext, intent, options.toBundle());

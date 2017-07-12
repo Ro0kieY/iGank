@@ -17,6 +17,8 @@
             android:id="@+id/gank_collapsing_toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:expandedTitleTextAppearance="@style/ExpandedWhiteToolbarTitleStyle"
+            app:collapsedTitleTextAppearance="@style/CollapsedWhiteToolbarTitleStyle"
             app:contentScrim="@color/lightBlack"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             android:fitsSystemWindows="true">

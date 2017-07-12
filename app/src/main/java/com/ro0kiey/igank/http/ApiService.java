@@ -1,8 +1,12 @@
 package com.ro0kiey.igank.http;
 
+import com.ro0kiey.igank.model.Bean.GankBean;
 import com.ro0kiey.igank.model.DailyGank;
 import com.ro0kiey.igank.model.Meizi;
+import com.ro0kiey.igank.model.TypeList;
 import com.ro0kiey.igank.model.休息视频;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -22,5 +26,8 @@ public interface ApiService {
 
     @GET("day/{year}/{month}/{day}")
     Observable<DailyGank> getDailyGank(@Path("year") int year, @Path("month") int month, @Path("day") int day);
+
+    @GET("data/{type}/{count}/{page}")
+    Observable<TypeList> getListGank(@Path("type") String type, @Path("count") int count, @Path("page") int page);
 
 }

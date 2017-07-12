@@ -12,4 +12,13 @@
         <item name="android:textColor">@android:color/transparent</item>
     </style>
 
+    <style name="ExpandedWhiteToolbarTitleStyle" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/White</item>
+        <item name="android:textSize">@dimen/toolbar_text_size</item>
+    </style>
+
+    <style name="CollapsedWhiteToolbarTitleStyle" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/White</item>
+    </style>
+
 </resources>
