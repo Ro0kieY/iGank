@@ -3,9 +3,9 @@ package com.ro0kiey.igank.ui.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +16,7 @@ import com.ro0kiey.igank.adapter.ListAdapter;
 import com.ro0kiey.igank.http.RetrofitClient;
 import com.ro0kiey.igank.model.Bean.GankBean;
 import com.ro0kiey.igank.model.TypeList;
+import com.ro0kiey.igank.ui.base.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,15 +31,15 @@ import io.reactivex.schedulers.Schedulers;
  * Created by Ro0kieY on 2017/7/12.
  */
 
-public class TabLayoutFragment extends Fragment {
+public class TabLayoutFragment extends BaseFragment {
 
     private RecyclerView recyclerView;
     private ListAdapter adapter;
-    private View view;
     private String mParam;
     private List<GankBean> mGankBeanList = new ArrayList<>();
+    private int mListCount = Config.LOAD_LIST_COUNT;
 
-    public static TabLayoutFragment newInstance(String param){
+    public static TabLayoutFragment newInstance(String param) {
         TabLayoutFragment fragment = new TabLayoutFragment();
         Bundle bundle = new Bundle();
         bundle.putString("type", param);
@@ -49,55 +50,116 @@ public class TabLayoutFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null){
+        if (getArguments() != null) {
             mParam = getArguments().getString("type");
         }
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.tablayout_fragment, container, false);
-        return view;
+    protected int getLayoutId() {
+        return R.layout.tablayout_fragment;
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        initView();
-    }
-
-    private void initView() {
-        recyclerView = (RecyclerView)view.findViewById(R.id.fragment_recyclerview);
+    protected void initView() {
+        recyclerView = (RecyclerView) view.findViewById(R.id.fragment_recyclerview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
-        switch (mParam){
-            case "Android":
-                getListData("Android", Config.LOAD_IMAGE_COUNT, Config.LOAD_IMAGE_PAGE);
+        recyclerView.addOnScrollListener(getLoadMoreListener(layoutManager));
+        recyclerView.setLayoutManager(layoutManager);
+    }
+
+    @Override
+    protected void initLazyLoadData() {
+        switch (mParam) {
+            case "ANDROID":
+                mParam = "Android";
+                getListData(mParam, Config.LOAD_LIST_COUNT, Config.LOAD_LIST_PAGE);
                 break;
             case "IOS":
-                getListData("iOS", Config.LOAD_IMAGE_COUNT, Config.LOAD_IMAGE_PAGE);
+                mParam = "iOS";
+                getListData(mParam, Config.LOAD_LIST_COUNT, Config.LOAD_LIST_PAGE);
                 break;
             case "APP":
-                getListData("App", Config.LOAD_IMAGE_COUNT, Config.LOAD_IMAGE_PAGE);
+                mParam = "App";
+                getListData(mParam, Config.LOAD_LIST_COUNT, Config.LOAD_LIST_PAGE);
                 break;
             case "瞎推荐":
-                getListData("瞎推荐", Config.LOAD_IMAGE_COUNT, Config.LOAD_IMAGE_PAGE);
+                mParam = "瞎推荐";
+                getListData(mParam, Config.LOAD_LIST_COUNT, Config.LOAD_LIST_PAGE);
                 break;
             case "拓展资源":
-                getListData("拓展资源", Config.LOAD_IMAGE_COUNT, Config.LOAD_IMAGE_PAGE);
+                mParam = "拓展资源";
+                getListData(mParam, Config.LOAD_LIST_COUNT, Config.LOAD_LIST_PAGE);
                 break;
             case "前端":
-                getListData("前端", Config.LOAD_IMAGE_COUNT, Config.LOAD_IMAGE_PAGE);
+                mParam = "前端";
+                getListData(mParam, Config.LOAD_LIST_COUNT, Config.LOAD_LIST_PAGE);
                 break;
             case "休息视频":
-                getListData("休息视频", Config.LOAD_IMAGE_COUNT, Config.LOAD_IMAGE_PAGE);
+                mParam = "休息视频";
+                getListData(mParam, Config.LOAD_LIST_COUNT, Config.LOAD_LIST_PAGE);
                 break;
             default:
                 break;
         }
-        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+    }
 
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void initEvent() {
+
+    }
+
+    @Override
+    protected void invisibleEvent() {
+
+    }
+
+    private RecyclerView.OnScrollListener getLoadMoreListener(final LinearLayoutManager manager) {
+        return new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                Log.d("onScrolled", "dy " + dy);
+                int lastPosition = manager.findLastVisibleItemPosition();
+                if (lastPosition == adapter.getItemCount() - 1) {
+                    mListCount += Config.LOAD_LIST_COUNT;
+                    getMoreList(mParam, mListCount, Config.LOAD_LIST_PAGE);
+                }
+            }
+        };
+    }
+
+    private void getMoreList(String type, int count, int page) {
+
+        RetrofitClient.getApiServiceInstance().getListGank(type, count, page)
+                .map(new Function<TypeList, List<GankBean>>() {
+                    @Override
+                    public List<GankBean> apply(@NonNull TypeList typeList) throws Exception {
+                        //int oldSize = mGankBeanList.size();
+                        mGankBeanList.clear();
+                        //adapter.notifyItemRangeRemoved(0, oldSize);
+                        return createListWithTypeList(typeList);
+                    }
+                }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<GankBean>>() {
+                    @Override
+                    public void accept(@NonNull List<GankBean> gankBeen) throws Exception {
+                        //adapter.notifyDataSetChanged();
+                        adapter.notifyItemRangeChanged(mGankBeanList.size() - Config.LOAD_IMAGE_COUNT, Config.LOAD_IMAGE_COUNT);
+                        //adapter.notifyItemRangeInserted(0, mGankBeanList.size());
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        Snackbar.make(view, "无法获得更多", Snackbar.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void getListData(String type, int count, int page) {
@@ -105,6 +167,7 @@ public class TabLayoutFragment extends Fragment {
                 .map(new Function<TypeList, List<GankBean>>() {
                     @Override
                     public List<GankBean> apply(@NonNull TypeList typeList) throws Exception {
+                        //mGankBeanList.clear();
                         return createListWithTypeList(typeList);
                     }
                 })
@@ -125,13 +188,11 @@ public class TabLayoutFragment extends Fragment {
     }
 
     private List<GankBean> createListWithTypeList(TypeList typeList) {
-        if (typeList != null){
-            for (int i = 0; i < typeList.getResults().size(); i++){
+        if (typeList != null) {
+            for (int i = 0; i < typeList.getResults().size(); i++) {
                 mGankBeanList.add(typeList.getResults().get(i));
             }
         }
         return mGankBeanList;
     }
-
-
 }

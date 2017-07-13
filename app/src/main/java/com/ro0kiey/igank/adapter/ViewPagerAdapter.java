@@ -23,7 +23,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mTitleList[position];
+        return mTitleList[position].toUpperCase();
     }
 
     @Override

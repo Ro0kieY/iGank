@@ -2,7 +2,12 @@ package com.ro0kiey.igank.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,8 +44,12 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final GankBean gankBean = mGankBean.get(position);
-        holder.textView.setText(gankBean.getDesc());
+            final GankBean gankBean = mGankBean.get(position);
+        String gankStyle = gankBean.getDesc() + " @" + gankBean.getWho();
+        SpannableString spannableString = new SpannableString(gankStyle);
+        spannableString.setSpan(new RelativeSizeSpan(0.7f), gankBean.getDesc().length() + 1, gankStyle.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new ForegroundColorSpan(Color.GRAY), gankBean.getDesc().length() + 1, gankStyle.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        holder.textView.setText(spannableString);
         holder.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,13 +71,14 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent (v.getContext(), ListActivity.class);
-                intent.putExtra("type", gankBean.getType());
+                intent.putExtra("type", gankBean.getType().toUpperCase());
                 v.getContext().startActivity(intent);
             }
         });
-
         runEnterAnimation(holder.itemView, position);
     }
+
+
 
     @Override
     public int getItemCount() {

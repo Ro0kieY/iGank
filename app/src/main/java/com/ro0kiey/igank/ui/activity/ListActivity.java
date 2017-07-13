@@ -21,7 +21,7 @@ public class ListActivity extends BaseActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private String[] types = new String[]{"Android", "IOS", "APP", "前端", "拓展资源", "瞎推荐", "休息视频"};
+    private String[] types = new String[]{"ANDROID", "IOS", "APP", "前端", "拓展资源", "瞎推荐", "休息视频"};
     private List<Fragment> fragmentList;
     private ViewPagerAdapter viewPagerAdapter;
 
@@ -43,6 +43,7 @@ public class ListActivity extends BaseActivity {
 
         tabLayout = (TabLayout)findViewById(R.id.list_tablayout);
         viewPager = (ViewPager)findViewById(R.id.list_viewpager);
+
         fragmentList = new ArrayList<>();
         for (int i = 0; i < types.length; i++){
             TabLayoutFragment fragment = TabLayoutFragment.newInstance(types[i]);
@@ -60,6 +61,15 @@ public class ListActivity extends BaseActivity {
 
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), types, fragmentList);
         viewPager.setAdapter(viewPagerAdapter);
+        String type = getIntent().getStringExtra("type");
+        int itemPos = -1;
+        for (int i = 0; i < types.length; i++){
+            if (type.equals(types[i])){
+                itemPos = i;
+            }
+            break;
+        }
+        viewPager.setCurrentItem(itemPos);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

@@ -321,15 +321,5 @@ public class MainActivity extends BaseActivity {
         }
         return meiziList;
     }
-
-
-    private List<MeiziBean> addMoreMeizi(Meizi meizi) {
-        if (meizi != null){
-            for (int i = meizi.results.size() - Config.LOAD_IMAGE_COUNT; i < meizi.results.size(); i++){
-                meiziList.add(meizi.results.get(i));
-            }
-        }
-        return meiziList;
-    }
 }
 
