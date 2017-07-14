@@ -32,8 +32,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|bottom"
-            android:layout_margin="@dimen/fab_margin"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:layout_marginBottom="60dp"
             android:backgroundTint="@color/lightBlack"
-            android:src="@mipmap/ic_arrow_up_bold_white_48dp"/>
+            android:src="@mipmap/ic_arrow_up_bold_white_48dp" />
+
 
 </android.support.design.widget.CoordinatorLayout>

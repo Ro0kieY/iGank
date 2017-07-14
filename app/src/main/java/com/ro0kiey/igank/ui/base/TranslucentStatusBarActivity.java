@@ -12,10 +12,10 @@ import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.StatusBarUtils;
 
 /**
- * Created by Ro0kieY on 2017/7/2.
+ * Created by Ro0kieY on 2017/7/15.
  */
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class TranslucentStatusBarActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     //private AppBarLayout appBarLayout;
@@ -27,10 +27,24 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
 
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
         //appBarLayout = (AppBarLayout)findViewById(R.id.appbarlayout);
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        StatusBarUtils.from(this)
+                //沉浸状态栏
+                .setTransparentStatusbar(true)
+                //白底黑字状态栏
+                .setLightStatusBar(true)
+                //设置toolbar,actionbar等view
+                .setActionbarView(toolbar)
+                .process();
+
     }
 
     protected abstract int getLayoutId();
+
 }

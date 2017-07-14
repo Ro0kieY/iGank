@@ -1,10 +1,12 @@
 package com.ro0kiey.igank.ui.activity;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -33,6 +35,9 @@ public class WebActivity extends BaseActivity {
         webView = (WebView)findViewById(R.id.activity_web_view);
         String VideoUrl = getIntent().getStringExtra("VideoUrl");
         setWebViewSettings(webView, VideoUrl);
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+        //        WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     @Override
@@ -57,9 +62,9 @@ public class WebActivity extends BaseActivity {
     private void setWebViewSettings(WebView webView, String Url) {
         settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
+        settings.setUseWideViewPort(true);
         settings.setLoadWithOverviewMode(true);
         settings.setAppCacheEnabled(true);
-        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         settings.setSupportZoom(true);
         webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new WebViewClient());

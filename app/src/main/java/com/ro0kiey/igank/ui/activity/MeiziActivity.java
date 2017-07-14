@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.ro0kiey.igank.Config;
 import com.ro0kiey.igank.R;
+import com.ro0kiey.igank.SharedElement;
 import com.ro0kiey.igank.ui.base.BaseActivity;
 
 import java.io.File;
@@ -32,9 +33,10 @@ public class MeiziActivity extends BaseActivity {
         imageView = (ImageView)findViewById(R.id.meizi_image);
 
         ViewCompat.setTransitionName(imageView, Config.ACTIVITY_IMAGE_TRANS);
+        imageView.setImageDrawable(SharedElement.SharedDrawable);
         meiziUrl = getIntent().getStringExtra("Url");
-        imageView.setDrawingCacheEnabled(true);
-        Glide.with(this).load(meiziUrl).crossFade().into(imageView);
+        /*imageView.setDrawingCacheEnabled(true);
+        Glide.with(this).load(meiziUrl).crossFade().into(imageView);*/
     }
 
     @Override

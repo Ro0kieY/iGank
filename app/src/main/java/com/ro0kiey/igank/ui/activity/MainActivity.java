@@ -20,6 +20,7 @@ import com.ro0kiey.igank.model.Bean.MeiziBean;
 import com.ro0kiey.igank.model.Meizi;
 import com.ro0kiey.igank.model.休息视频;
 import com.ro0kiey.igank.ui.base.BaseActivity;
+import com.ro0kiey.igank.ui.base.TranslucentStatusBarActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends TranslucentStatusBarActivity {
 
     private RecyclerView rv_meizi;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -44,6 +45,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         rv_meizi = (RecyclerView)findViewById(R.id.rv_meizi);

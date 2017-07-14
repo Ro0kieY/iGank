@@ -5,7 +5,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -21,7 +22,8 @@
             app:collapsedTitleTextAppearance="@style/CollapsedWhiteToolbarTitleStyle"
             app:contentScrim="@color/lightBlack"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            android:fitsSystemWindows="true">
+            android:fitsSystemWindows="true"
+            android:clipToPadding="true">
 
             <ImageView
                 android:id="@+id/gank_image_view"

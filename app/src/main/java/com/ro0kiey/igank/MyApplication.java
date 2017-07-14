@@ -1,6 +1,7 @@
 package com.ro0kiey.igank;
 
 import android.app.Application;
+import android.os.StrictMode;
 
 import com.squareup.leakcanary.LeakCanary;
 
@@ -18,7 +19,15 @@ public class MyApplication extends Application {
             // You should not init your app in this process.
             return;
         }
+        enabledStrictMode();
         LeakCanary.install(this);
-        // Normal app init code...
+    }
+
+    private static void enabledStrictMode() {
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder() //
+                .detectAll() //
+                .penaltyLog() //
+                .penaltyDeath() //
+                .build());
     }
 }
