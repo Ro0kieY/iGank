@@ -14,6 +14,7 @@ import com.ro0kiey.igank.http.RetrofitClient;
 import com.ro0kiey.igank.model.Bean.GankBean;
 import com.ro0kiey.igank.model.GankList;
 import com.ro0kiey.igank.ui.base.BaseFragment;
+import com.ro0kiey.igank.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,8 @@ public class TabLayoutFragment extends BaseFragment {
     private ListAdapter adapter;
     private String mParam;
     private List<GankBean> mGankBeanList = new ArrayList<>();
+    private int lastPosition;
+    private int lastCompletePosition;
     private int mListCount = Config.LOAD_LIST_COUNT;
 
     public static TabLayoutFragment newInstance(String param) {
@@ -122,8 +125,9 @@ public class TabLayoutFragment extends BaseFragment {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 Log.d("onScrolled", "dy " + dy);
-                int lastPosition = manager.findLastVisibleItemPosition();
-                if (lastPosition == adapter.getItemCount() - 1) {
+                lastCompletePosition = manager.findLastCompletelyVisibleItemPosition();
+                lastPosition = manager.findLastVisibleItemPosition();
+                if (lastPosition >= adapter.getItemCount() - 3) {
                     mListCount += Config.LOAD_LIST_COUNT;
                     getMoreList(mParam, mListCount, Config.LOAD_LIST_PAGE);
                 }
@@ -138,9 +142,9 @@ public class TabLayoutFragment extends BaseFragment {
                     @Override
                     public List<GankBean> apply(@NonNull GankList gankList) throws Exception {
                         //int oldSize = mGankBeanList.size();
-                        mGankBeanList.clear();
+                        //mGankBeanList.clear();
                         //adapter.notifyItemRangeRemoved(0, oldSize);
-                        return createListWithTypeList(gankList);
+                        return addMoreListWithTypeList(gankList);
                     }
                 }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -154,7 +158,11 @@ public class TabLayoutFragment extends BaseFragment {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@NonNull Throwable throwable) throws Exception {
-                        Snackbar.make(view, "无法获得更多", Snackbar.LENGTH_SHORT).show();
+                        if (lastPosition == lastCompletePosition){
+                            ToastUtils.SnackBarShort(view, R.string.load_list_failed);
+                        } else {
+                            return;
+                        }
                     }
                 });
     }
@@ -187,6 +195,15 @@ public class TabLayoutFragment extends BaseFragment {
     private List<GankBean> createListWithTypeList(GankList gankList) {
         if (gankList != null) {
             for (int i = 0; i < gankList.getResults().size(); i++) {
+                mGankBeanList.add(gankList.getResults().get(i));
+            }
+        }
+        return mGankBeanList;
+    }
+
+    private List<GankBean> addMoreListWithTypeList(GankList gankList) {
+        if (gankList != null){
+            for (int i = mGankBeanList.size(); i < gankList.getResults().size(); i++){
                 mGankBeanList.add(gankList.getResults().get(i));
             }
         }

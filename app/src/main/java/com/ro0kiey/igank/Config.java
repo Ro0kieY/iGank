@@ -11,7 +11,7 @@ public class Config {
     public static final int LOAD_IMAGE_COUNT = 6;
     public static final int LOAD_IMAGE_PAGE = 1;
 
-    public static final int LOAD_LIST_COUNT = 10;
+    public static final int LOAD_LIST_COUNT = 12;
     public static final int LOAD_LIST_PAGE = 1;
 
 }

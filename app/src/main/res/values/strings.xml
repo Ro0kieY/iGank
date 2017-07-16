@@ -5,6 +5,7 @@
     <string name="load_more_meizi_failed">Gank更多妹纸失败...</string>
     <string name="refresh_failed">刷新失败...</string>
     <string name="load_failed">加载失败...</string>
+    <string name="load_list_failed">无法获得更多内容...</string>
 
     <string name="save_success">成功收下妹纸...</string>
     <string name="already_saved">妹纸已经躺在图库里了...</string>

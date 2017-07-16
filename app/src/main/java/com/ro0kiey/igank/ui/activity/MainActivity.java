@@ -54,6 +54,8 @@ public class MainActivity extends TranslucentStatusBarActivity {
         rv_meizi.setLayoutManager(layoutManager);
         meiziList = new ArrayList<>();
         rv_meizi.addOnScrollListener(getLoadMoreListener(layoutManager));
+        adapter = new MeiziAdapter(meiziList);
+        rv_meizi.setAdapter(adapter);
 
         fab = (FloatingActionButton)findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +91,7 @@ public class MainActivity extends TranslucentStatusBarActivity {
                 startActivity(intent);
                 break;
             case R.id.refresh:
-                getMeiziData(Config.LOAD_IMAGE_COUNT, Config.LOAD_IMAGE_PAGE);
+                refreshMeiziData(Config.LOAD_IMAGE_COUNT, Config.LOAD_IMAGE_PAGE);
             default:
                 break;
         }
@@ -201,8 +203,7 @@ public class MainActivity extends TranslucentStatusBarActivity {
                 .subscribe(new Consumer<List<MeiziBean>>() {
                     @Override
                     public void accept(@NonNull List<MeiziBean> meiziBean) throws Exception {
-                        adapter = new MeiziAdapter(meiziBean);
-                        rv_meizi.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
