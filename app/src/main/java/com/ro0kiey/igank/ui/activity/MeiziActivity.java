@@ -43,6 +43,7 @@ public class MeiziActivity extends BaseActivity {
         meiziUrl = getIntent().getStringExtra("Url");
         imageView.setImageDrawable(SharedElement.SharedDrawable);
         ViewCompat.setTransitionName(imageView, Config.ACTIVITY_IMAGE_TRANS);
+        imageView.setDrawingCacheEnabled(true);
         //Glide.with(this).load(meiziUrl).into(imageView);
         //imageView.setImageBitmap(SharedElement.SharedBitmap);
         Glide.with(this).load(meiziUrl).asBitmap().into(new SimpleTarget<Bitmap>() {
@@ -93,7 +94,7 @@ public class MeiziActivity extends BaseActivity {
             case 1:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     saveMeiziImage(meiziUrl);
-                } 
+                }
                 break;
             default:
                 break;
@@ -101,38 +102,29 @@ public class MeiziActivity extends BaseActivity {
     }
 
     private void saveMeiziImage(String url) {
-        if (ExistSDCard()){
-            Bitmap bitmap = imageView.getDrawingCache();
-            File appDir = new File(Environment.getExternalStorageDirectory().getPath(), "igank/");
-            if (!appDir.exists()){
-                appDir.mkdirs();
-            }
-            String fileName = url.substring(8, url.length() - 4).replace("/", "-") + ".jpg";
-            File file = new File(appDir, fileName);
-            if (!file.exists()){
-                try {
-                    FileOutputStream os = new FileOutputStream(file);
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
-                    os.flush();
-                    os.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                this.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
-                ToastUtils.SnackBarShort(imageView, R.string.save_success);
-            } else {
-                ToastUtils.SnackBarShort(imageView, R.string.already_saved);
-            }
-            //imageView.setDrawingCacheEnabled(false);
-            Log.d("MeiziActivity", "saveMeiziImage: ");
+        Bitmap bitmap = imageView.getDrawingCache();
+        File appDir = new File(Environment.getExternalStorageDirectory().getPath(), "igank/");
+        if (!appDir.exists()){
+            appDir.mkdirs();
         }
+        String fileName = url.substring(8, url.length() - 4).replace("/", "-") + ".jpg";
+        File file = new File(appDir, fileName);
+        if (!file.exists()){
+            try {
+                FileOutputStream os = new FileOutputStream(file);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
+                os.flush();
+                os.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            this.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
+            ToastUtils.SnackBarShort(imageView, R.string.save_success);
+        } else {
+            ToastUtils.SnackBarShort(imageView, R.string.already_saved);
+        }
+        imageView.setDrawingCacheEnabled(false);
+        Log.d("MeiziActivity", "saveMeiziImage: ");
     }
 
-    private boolean ExistSDCard() {
-        if (android.os.Environment.getExternalStorageState().equals(
-                android.os.Environment.MEDIA_MOUNTED)) {
-            return true;
-        } else
-            return false;
-    }
 }

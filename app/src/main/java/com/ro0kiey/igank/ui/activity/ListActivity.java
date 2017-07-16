@@ -26,7 +26,6 @@ public class ListActivity extends BaseActivity {
     private List<Fragment> fragmentList;
     private ViewPagerAdapter viewPagerAdapter;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,15 +61,15 @@ public class ListActivity extends BaseActivity {
 
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), types, fragmentList);
         viewPager.setAdapter(viewPagerAdapter);
+        tabLayout.setupWithViewPager(viewPager);
         String type = getIntent().getStringExtra("type");
-        int itemPos = -1;
         for (int i = 0; i < types.length; i++){
             if (type.equals(types[i])){
-                itemPos = i;
+                //fragmentList.get(i).setUserVisibleHint(true);
+                viewPager.setCurrentItem(i);
+                tabLayout.getTabAt(i).select();
             }
-            break;
         }
-        viewPager.setCurrentItem(itemPos);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -86,7 +85,6 @@ public class ListActivity extends BaseActivity {
 
             }
         });
-        tabLayout.setupWithViewPager(viewPager);
     }
 
     @Override
