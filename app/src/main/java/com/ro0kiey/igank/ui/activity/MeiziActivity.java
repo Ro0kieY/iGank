@@ -27,6 +27,7 @@ public class MeiziActivity extends BaseActivity {
 
     private ImageView imageView;
     private String meiziUrl;
+    private boolean hasSaved = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +38,7 @@ public class MeiziActivity extends BaseActivity {
         imageView.setImageDrawable(SharedElement.SharedDrawable);
         ViewCompat.setTransitionName(imageView, Config.ACTIVITY_IMAGE_TRANS);
         //Glide.with(this).load(meiziUrl).into(imageView);
-
         //imageView.setImageBitmap(SharedElement.SharedBitmap);
-
         Glide.with(this).load(meiziUrl).asBitmap().into(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
@@ -65,8 +64,13 @@ public class MeiziActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.save_meizi:
-                saveMeiziImage(meiziUrl);
-                ToastUtils.SnackBarShort(imageView, R.string.save_success);
+                if (!hasSaved){
+                    saveMeiziImage(meiziUrl);
+                    ToastUtils.SnackBarShort(imageView, R.string.save_success);
+                    hasSaved = true;
+                } else {
+                    ToastUtils.SnackBarShort(imageView, R.string.already_saved);
+                }
                 break;
             default:
                 break;

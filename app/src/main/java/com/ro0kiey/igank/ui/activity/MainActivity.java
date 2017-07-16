@@ -40,6 +40,8 @@ public class MainActivity extends TranslucentStatusBarActivity {
     private MeiziAdapter adapter;
     private FloatingActionButton fab;
     private StaggeredGridLayoutManager layoutManager;
+    private int[] lastPostition = new int[2];
+    private int[] lastCompletePosition = new int[2];
     private int mImageCount = Config.LOAD_IMAGE_COUNT;
 
     @Override
@@ -86,6 +88,8 @@ public class MainActivity extends TranslucentStatusBarActivity {
                 Intent intent = new Intent(MainActivity.this, AboutActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.refresh:
+                getMeiziData(Config.LOAD_IMAGE_COUNT, Config.LOAD_IMAGE_PAGE);
             default:
                 break;
         }
@@ -97,8 +101,8 @@ public class MainActivity extends TranslucentStatusBarActivity {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 Log.d("onScrolled", "dy " + dy);
-                int[] lastPostition = new int[2];
-                manager.findLastCompletelyVisibleItemPositions(lastPostition);
+                manager.findLastVisibleItemPositions(lastPostition);
+                manager.findLastCompletelyVisibleItemPositions(lastCompletePosition);
                 if (lastPostition[1] == adapter.getItemCount() - 1){
                     mImageCount += Config.LOAD_IMAGE_COUNT;
                     loadMoreMeizi(mImageCount, Config.LOAD_IMAGE_PAGE);
@@ -138,7 +142,11 @@ public class MainActivity extends TranslucentStatusBarActivity {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@NonNull Throwable throwable) throws Exception {
-                        loadMeiziFailed(R.string.load_more_meizi_failed);
+                        if (lastCompletePosition[1] == lastPostition[1]){
+                            loadMeiziFailed(R.string.load_more_meizi_failed);
+                        } else {
+                            return;
+                        }
                     }
                 });
     }
@@ -150,7 +158,6 @@ public class MainActivity extends TranslucentStatusBarActivity {
                     @Override
                     public Meizi apply(@NonNull Meizi meizi, @NonNull 休息视频 休息视频) throws Exception {
                         return createMeiziWith休息视频(meizi, 休息视频);
-
                     }
                 }).map(new Function<Meizi, List<MeiziBean>>() {
             @Override
@@ -219,12 +226,7 @@ public class MainActivity extends TranslucentStatusBarActivity {
     }
 
     private void loadMeiziFailed(int resId) {
-        ToastUtils.SnackBarWithAction(rv_meizi, resId, R.string.confirm, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //refreshMeiziData(Config.LOAD_IMAGE_COUNT, Config.LOAD_IMAGE_PAGE);
-            }
-        });
+        ToastUtils.SnackBarShort(rv_meizi, resId);
     }
 
 
