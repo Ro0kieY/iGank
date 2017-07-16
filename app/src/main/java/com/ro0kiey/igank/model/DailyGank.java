@@ -1,11 +1,6 @@
 package com.ro0kiey.igank.model;
 
-import com.ro0kiey.igank.model.Bean.AndroidBean;
 import com.ro0kiey.igank.model.Bean.GankBean;
-import com.ro0kiey.igank.model.Bean.IOSBean;
-import com.ro0kiey.igank.model.Bean.休息视频Bean;
-import com.ro0kiey.igank.model.Bean.前端Bean;
-import com.ro0kiey.igank.model.Bean.福利Bean;
 
 import java.util.List;
 

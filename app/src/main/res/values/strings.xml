@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">iGank</string>
 
-    <string name="activity_image_trans">activity_image_trans</string>
+    <string name="gank_failed">Gank失败，已被反杀...</string>
+    <string name="load_more_meizi_failed">Gank更多妹纸失败...</string>
+    <string name="refresh_failed">刷新失败...</string>
+    <string name="load_failed">加载失败...</string>
+
+    <string name="save_success">妹纸已经躺到图库里了...</string>
+    <string name="confirm">确定</string>
 
 </resources>

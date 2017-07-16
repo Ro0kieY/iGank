@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
 import android.util.Log;
 import android.view.Menu;
@@ -13,10 +12,13 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.ro0kiey.igank.Config;
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.SharedElement;
 import com.ro0kiey.igank.ui.base.BaseActivity;
+import com.ro0kiey.igank.utils.ToastUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,12 +33,21 @@ public class MeiziActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         imageView = (ImageView)findViewById(R.id.meizi_image);
-
-        ViewCompat.setTransitionName(imageView, Config.ACTIVITY_IMAGE_TRANS);
-        imageView.setImageDrawable(SharedElement.SharedDrawable);
         meiziUrl = getIntent().getStringExtra("Url");
-        /*imageView.setDrawingCacheEnabled(true);
-        Glide.with(this).load(meiziUrl).crossFade().into(imageView);*/
+        imageView.setImageDrawable(SharedElement.SharedDrawable);
+        ViewCompat.setTransitionName(imageView, Config.ACTIVITY_IMAGE_TRANS);
+        //Glide.with(this).load(meiziUrl).into(imageView);
+
+        //imageView.setImageBitmap(SharedElement.SharedBitmap);
+
+        Glide.with(this).load(meiziUrl).asBitmap().into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                imageView.setImageBitmap(resource);
+            }
+        });
+
+
     }
 
     @Override
@@ -55,7 +66,7 @@ public class MeiziActivity extends BaseActivity {
         switch (item.getItemId()){
             case R.id.save_meizi:
                 saveMeiziImage(meiziUrl);
-                Snackbar.make(imageView, Config.SAVE_SUCCESS, Snackbar.LENGTH_SHORT).show();
+                ToastUtils.SnackBarShort(imageView, R.string.save_success);
                 break;
             default:
                 break;

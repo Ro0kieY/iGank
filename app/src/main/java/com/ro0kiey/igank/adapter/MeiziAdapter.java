@@ -58,6 +58,7 @@ public class MeiziAdapter extends RecyclerView.Adapter<MeiziAdapter.ViewHolder> 
         holder.textViewDate.setText(meizi.getCreatedAt().substring(0, 10));
         holder.textViewWho.setText(meizi.getWho());
         holder.textViewDesc.setText(meizi.getDesc());
+
         holder.textLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,7 +66,7 @@ public class MeiziAdapter extends RecyclerView.Adapter<MeiziAdapter.ViewHolder> 
                 intent.putExtra("date", meizi.getPublishedAt());
                 intent.putExtra("Url", meizi.getUrl());
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity)mContext, holder.imageView, Config.ACTIVITY_IMAGE_TRANS);
-                ActivityCompat.startActivity(mContext, intent, options.toBundle());
+                ActivityCompat.startActivity((Activity)mContext, intent, options.toBundle());
             }
         });
         holder.imageView.setBackgroundColor(Color.argb(200, red, green, blue));
@@ -73,6 +74,7 @@ public class MeiziAdapter extends RecyclerView.Adapter<MeiziAdapter.ViewHolder> 
             @Override
             public void onClick(View v) {
                 SharedElement.SharedDrawable = holder.imageView.getDrawable();
+
                 Intent intent = new Intent(mContext, MeiziActivity.class);
                 intent.putExtra("Url", meizi.getUrl());
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity)mContext, v, Config.ACTIVITY_IMAGE_TRANS);
@@ -80,7 +82,7 @@ public class MeiziAdapter extends RecyclerView.Adapter<MeiziAdapter.ViewHolder> 
             }
         });
         Glide.with(mContext).load(meizi.getUrl()).centerCrop().crossFade().into(holder.imageView);
-        runEnterAnimation(holder, position);
+        //runEnterAnimation(holder, position);
         Log.d("on Debug", "position " + position + "run EnterAnimation");
     }
 

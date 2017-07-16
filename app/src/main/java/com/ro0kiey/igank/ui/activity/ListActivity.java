@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.adapter.ViewPagerAdapter;
 import com.ro0kiey.igank.ui.base.BaseActivity;
+import com.ro0kiey.igank.ui.fragment.TabLayoutFragment;
 
 import java.util.ArrayList;
 import java.util.List;

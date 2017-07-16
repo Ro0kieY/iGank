@@ -3,7 +3,6 @@ package com.ro0kiey.igank.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -19,8 +18,8 @@ import com.ro0kiey.igank.http.RetrofitClient;
 import com.ro0kiey.igank.model.Bean.MeiziBean;
 import com.ro0kiey.igank.model.Meizi;
 import com.ro0kiey.igank.model.休息视频;
-import com.ro0kiey.igank.ui.base.BaseActivity;
 import com.ro0kiey.igank.ui.base.TranslucentStatusBarActivity;
+import com.ro0kiey.igank.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,7 +98,7 @@ public class MainActivity extends TranslucentStatusBarActivity {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 Log.d("onScrolled", "dy " + dy);
                 int[] lastPostition = new int[2];
-                manager.findLastVisibleItemPositions(lastPostition);
+                manager.findLastCompletelyVisibleItemPositions(lastPostition);
                 if (lastPostition[1] == adapter.getItemCount() - 1){
                     mImageCount += Config.LOAD_IMAGE_COUNT;
                     loadMoreMeizi(mImageCount, Config.LOAD_IMAGE_PAGE);
@@ -115,60 +114,33 @@ public class MainActivity extends TranslucentStatusBarActivity {
                     @Override
                     public Meizi apply(@NonNull Meizi meizi, @NonNull 休息视频 休息视频) throws Exception {
                         return createMeiziWith休息视频(meizi, 休息视频);
-
                     }
                 }).map(new Function<Meizi, List<MeiziBean>>() {
             @Override
             public List<MeiziBean> apply(Meizi meizi) throws Exception {
                 Log.d("MainActivity", "apply: " + meizi.results.size() + meizi.toString());
-                meiziList.clear();
-                return addAllMeizi(meizi);
+
+                //meiziList.clear();
+                //adapter.notifyDataSetChanged();0
+                //adapter.notifyItemRangeRemoved(0, meiziList.size());
+                return addMoreMeizi(meizi);
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<List<MeiziBean>>() {
                     @Override
                     public void accept(@NonNull List<MeiziBean> meiziBean) throws Exception {
+                        //MeiziAdapter mAdapter = new MeiziAdapter(meiziBean);
+                        //rv_meizi.setAdapter(mAdapter);
+                        //mAdapter.notifyDataSetChanged();
                         adapter.notifyItemRangeChanged(meiziList.size() - Config.LOAD_IMAGE_COUNT, Config.LOAD_IMAGE_COUNT);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@NonNull Throwable throwable) throws Exception {
-                        Snackbar.make(rv_meizi, "加载更多失败，请检查wifi是否连接...", Snackbar.LENGTH_LONG)
-                                .setAction("重试", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        refreshMeiziData(Config.LOAD_IMAGE_COUNT, Config.LOAD_IMAGE_PAGE);
-                                    }
-                                })
-                                .show();
+                        loadMeiziFailed(R.string.load_more_meizi_failed);
                     }
                 });
-
-
-       /* RetrofitClient.getApiServiceInstance().getMeiziData(count, page)
-                .map(new Function<Meizi, TypeList<MeiziBean>>() {
-                    @Override
-                    public TypeList<MeiziBean> apply(Meizi meizi) throws Exception {
-                        Log.d("MainActivity", "apply: " + meizi.results.size() + meizi.toString());
-                        meiziList.clear();
-                        return addAllMeizi(meizi, );
-                    }
-                }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<TypeList<MeiziBean>>() {
-                    @Override
-                    public void accept(@NonNull TypeList<MeiziBean> resultsBean) throws Exception {
-                        Log.d("MainActivity", "loadmore");
-                        //adapter.notifyDataSetChanged();
-                        adapter.notifyItemRangeChanged(meiziList.size() - Config.LOAD_IMAGE_COUNT, Config.LOAD_IMAGE_COUNT);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(@NonNull Throwable throwable) throws Exception {
-                        Toast.makeText(MainActivity.this, "loadMore Error", Toast.LENGTH_SHORT).show();
-                    }
-                });*/
     }
 
     private void refreshMeiziData(final int count, int page) {
@@ -183,7 +155,7 @@ public class MainActivity extends TranslucentStatusBarActivity {
                 }).map(new Function<Meizi, List<MeiziBean>>() {
             @Override
             public List<MeiziBean> apply(Meizi meizi) throws Exception {
-                Log.d("MainActivity", "apply: " + meizi.results.size() + meizi.toString());
+                //Log.d("MainActivity", "apply: " + meizi.results.size() + meizi.toString());
                 meiziList.clear();
                 mImageCount = Config.LOAD_IMAGE_COUNT;
                 return addAllMeizi(meizi);
@@ -198,40 +170,9 @@ public class MainActivity extends TranslucentStatusBarActivity {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@NonNull Throwable throwable) throws Exception {
-                        Snackbar.make(rv_meizi, "加载失败，请检查wifi是否连接...", Snackbar.LENGTH_LONG)
-                                .setAction("重试", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        refreshMeiziData(Config.LOAD_IMAGE_COUNT, Config.LOAD_IMAGE_PAGE);
-                                    }
-                                })
-                                .show();
+                        loadMeiziFailed(R.string.refresh_failed);
                     }
                 });
-
-
-        /*RetrofitClient.getApiServiceInstance().getMeiziData(count, page)
-                .map(new Function<Meizi, TypeList<MeiziBean>>() {
-                    @Override
-                    public TypeList<MeiziBean> apply(Meizi meizi) throws Exception {
-                        Log.d("MainActivity", "apply: " + meizi.results.size() + meizi.toString());
-                        meiziList.clear();
-                        mImageCount = Config.LOAD_IMAGE_COUNT;
-                        return addAllMeizi(meizi);
-                    }
-                }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<TypeList<MeiziBean>>() {
-                    @Override
-                    public void accept(@NonNull TypeList<MeiziBean> resultsBean) throws Exception {
-                        adapter.notifyDataSetChanged();
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(@NonNull Throwable throwable) throws Exception {
-                        Toast.makeText(MainActivity.this, "refresh Error", Toast.LENGTH_SHORT).show();
-                    }
-                });*/
     }
 
     private void getMeiziData(final int count, int page) {
@@ -259,46 +200,9 @@ public class MainActivity extends TranslucentStatusBarActivity {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@NonNull Throwable throwable) throws Exception {
-                        Snackbar.make(rv_meizi, "加载失败，请检查wifi是否连接...", Snackbar.LENGTH_LONG)
-                                .setAction("重试", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        refreshMeiziData(Config.LOAD_IMAGE_COUNT, Config.LOAD_IMAGE_PAGE);
-                                    }
-                                })
-                                .show();
+                        loadMeiziFailed(R.string.load_failed);
                     }
                 });
-
-
-        /*RetrofitClient.getApiServiceInstance().getMeiziData(count, page)
-                .map(new Function<Meizi, TypeList<MeiziBean>>() {
-                    @Override
-                    public TypeList<MeiziBean> apply(Meizi meizi) throws Exception {
-                        Log.d("MainActivity", "apply: " + meizi.toString());
-                        return addAllMeizi(meizi);
-                    }
-                }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<TypeList<MeiziBean>>() {
-                    @Override
-                    public void accept(@NonNull TypeList<MeiziBean> resultsBean) throws Exception {
-                        adapter = new MeiziAdapter(resultsBean);
-                        rv_meizi.setAdapter(adapter);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(@NonNull Throwable throwable) throws Exception {
-                        Snackbar.make(rv_meizi, "加载失败，请检查wifi是否连接...", Snackbar.LENGTH_LONG)
-                                .setAction("重试", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        refreshMeiziData(Config.LOAD_IMAGE_COUNT, Config.LOAD_IMAGE_PAGE);
-                                    }
-                                })
-                                .show();
-                    }
-                });*/
     }
 
     private Meizi createMeiziWith休息视频(Meizi meizi, 休息视频 休息视频) {
@@ -314,11 +218,29 @@ public class MainActivity extends TranslucentStatusBarActivity {
         return R.layout.activity_main;
     }
 
+    private void loadMeiziFailed(int resId) {
+        ToastUtils.SnackBarWithAction(rv_meizi, resId, R.string.confirm, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //refreshMeiziData(Config.LOAD_IMAGE_COUNT, Config.LOAD_IMAGE_PAGE);
+            }
+        });
+    }
+
 
     private List<MeiziBean> addAllMeizi(Meizi meizi) {
         if (meizi != null){
             for (int i = 0; i < meizi.results.size(); i++){
                 meiziList.add(meizi.results.get(i));
+            }
+        }
+        return meiziList;
+    }
+
+    private List<MeiziBean> addMoreMeizi(Meizi meizi) {
+        if (meizi != null){
+            for (int i = meiziList.size(); i < meizi.results.size(); i++){
+                    meiziList.add(meizi.results.get(i));
             }
         }
         return meiziList;

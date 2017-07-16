@@ -8,7 +8,7 @@ import java.util.List;
  * Created by Ro0kieY on 2017/7/12.
  */
 
-public class TypeList {
+public class GankList {
 
     /**
      * error : false

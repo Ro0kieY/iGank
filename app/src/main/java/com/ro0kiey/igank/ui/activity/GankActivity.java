@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +23,7 @@ import com.ro0kiey.igank.http.RetrofitClient;
 import com.ro0kiey.igank.model.Bean.GankBean;
 import com.ro0kiey.igank.model.DailyGank;
 import com.ro0kiey.igank.ui.base.BaseActivity;
+import com.ro0kiey.igank.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,14 +107,7 @@ public class GankActivity extends BaseActivity {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@NonNull Throwable throwable) throws Exception {
-                        Snackbar.make(rv_gank, "Gank失败，已被反杀...", Snackbar.LENGTH_LONG)
-                                .setAction("重试", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-
-                                    }
-                                })
-                                .show();
+                        ToastUtils.SnackBarShort(rv_gank, R.string.gank_failed);
                     }
                 });
     }

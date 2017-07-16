@@ -1,4 +1,4 @@
-package com.ro0kiey.igank;
+package com.ro0kiey.igank.utils;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -17,6 +17,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
+ * 透明状态栏工具类
  * Created by Ro0kieY on 2017/7/15.
  */
 

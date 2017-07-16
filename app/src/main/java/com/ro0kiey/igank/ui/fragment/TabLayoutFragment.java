@@ -1,4 +1,4 @@
-package com.ro0kiey.igank.ui.activity;
+package com.ro0kiey.igank.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,16 +6,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.ro0kiey.igank.Config;
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.adapter.ListAdapter;
 import com.ro0kiey.igank.http.RetrofitClient;
 import com.ro0kiey.igank.model.Bean.GankBean;
-import com.ro0kiey.igank.model.TypeList;
+import com.ro0kiey.igank.model.GankList;
 import com.ro0kiey.igank.ui.base.BaseFragment;
 
 import java.util.ArrayList;
@@ -137,13 +134,13 @@ public class TabLayoutFragment extends BaseFragment {
     private void getMoreList(String type, int count, int page) {
 
         RetrofitClient.getApiServiceInstance().getListGank(type, count, page)
-                .map(new Function<TypeList, List<GankBean>>() {
+                .map(new Function<GankList, List<GankBean>>() {
                     @Override
-                    public List<GankBean> apply(@NonNull TypeList typeList) throws Exception {
+                    public List<GankBean> apply(@NonNull GankList gankList) throws Exception {
                         //int oldSize = mGankBeanList.size();
                         mGankBeanList.clear();
                         //adapter.notifyItemRangeRemoved(0, oldSize);
-                        return createListWithTypeList(typeList);
+                        return createListWithTypeList(gankList);
                     }
                 }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -164,11 +161,11 @@ public class TabLayoutFragment extends BaseFragment {
 
     private void getListData(String type, int count, int page) {
         RetrofitClient.getApiServiceInstance().getListGank(type, count, page)
-                .map(new Function<TypeList, List<GankBean>>() {
+                .map(new Function<GankList, List<GankBean>>() {
                     @Override
-                    public List<GankBean> apply(@NonNull TypeList typeList) throws Exception {
+                    public List<GankBean> apply(@NonNull GankList gankList) throws Exception {
                         //mGankBeanList.clear();
-                        return createListWithTypeList(typeList);
+                        return createListWithTypeList(gankList);
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -187,10 +184,10 @@ public class TabLayoutFragment extends BaseFragment {
                 });
     }
 
-    private List<GankBean> createListWithTypeList(TypeList typeList) {
-        if (typeList != null) {
-            for (int i = 0; i < typeList.getResults().size(); i++) {
-                mGankBeanList.add(typeList.getResults().get(i));
+    private List<GankBean> createListWithTypeList(GankList gankList) {
+        if (gankList != null) {
+            for (int i = 0; i < gankList.getResults().size(); i++) {
+                mGankBeanList.add(gankList.getResults().get(i));
             }
         }
         return mGankBeanList;

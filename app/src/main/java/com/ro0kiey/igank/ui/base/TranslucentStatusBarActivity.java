@@ -9,7 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.WindowManager;
 
 import com.ro0kiey.igank.R;
-import com.ro0kiey.igank.StatusBarUtils;
+import com.ro0kiey.igank.utils.StatusBarUtils;
 
 /**
  * Created by Ro0kieY on 2017/7/15.
