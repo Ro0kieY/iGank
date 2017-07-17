@@ -82,8 +82,7 @@ public class MeiziAdapter extends RecyclerView.Adapter<MeiziAdapter.ViewHolder> 
             }
         });
         Glide.with(mContext).load(meizi.getUrl()).centerCrop().crossFade().into(holder.imageView);
-        //runEnterAnimation(holder, position);
-        Log.d("on Debug", "position " + position + "run EnterAnimation");
+        runEnterAnimation(holder, position);
     }
 
     @Override
@@ -121,7 +120,7 @@ public class MeiziAdapter extends RecyclerView.Adapter<MeiziAdapter.ViewHolder> 
                     .translationX(0).alpha(1f)//设置最终效果为完全不透明，并且在原来的位置
                     //.setStartDelay(200 * (position))//根据item的位置设置延迟时间，达到依次动画一个接一个进行的效果
                     .setInterpolator(new DecelerateInterpolator(0.5f))//设置动画效果为在动画开始的地方快然后慢
-                    .setDuration(500)
+                    .setDuration(400)
                     /*.setListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
@@ -139,7 +138,7 @@ public class MeiziAdapter extends RecyclerView.Adapter<MeiziAdapter.ViewHolder> 
                     .translationX(0).alpha(1f)//设置最终效果为完全不透明，并且在原来的位置
                     //.setStartDelay(200 * (position))//根据item的位置设置延迟时间，达到依次动画一个接一个进行的效果
                     .setInterpolator(new DecelerateInterpolator(0.5f))//设置动画效果为在动画开始的地方快然后慢
-                    .setDuration(500)
+                    .setDuration(400)
                     /*.setListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {

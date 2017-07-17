@@ -121,7 +121,6 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.ViewHolder> {
 
                         @Override
                         public void onAnimationEnd(Animation animation) {
-
                         }
 
                         @Override

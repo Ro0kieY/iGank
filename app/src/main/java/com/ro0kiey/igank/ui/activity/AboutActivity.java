@@ -1,5 +1,6 @@
 package com.ro0kiey.igank.ui.activity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,11 +8,16 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.ro0kiey.igank.Config;
 import com.ro0kiey.igank.R;
+import com.ro0kiey.igank.utils.ShareUtils;
 
 /**
  * Created by Ro0kieY on 2017/7/4.
@@ -42,6 +48,24 @@ public class AboutActivity extends AppCompatActivity {
             collapsingToolbar.setCollapsedTitleTextColor(getColor(R.color.White));
         }
         Glide.with(this).load(R.mipmap.ic_launcher).into(imageView);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.about_activity_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.share:
+                ShareUtils.shareApp(this, R.string.share_app, R.string.share_app_to_friend);
+                break;
+            default:
+                break;
+        }
+        return false;
     }
 }
 

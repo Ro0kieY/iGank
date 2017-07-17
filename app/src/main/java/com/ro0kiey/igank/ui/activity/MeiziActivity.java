@@ -1,19 +1,15 @@
 package com.ro0kiey.igank.ui.activity;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.PermissionChecker;
 import android.support.v4.view.ViewCompat;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -25,10 +21,11 @@ import com.ro0kiey.igank.Config;
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.SharedElement;
 import com.ro0kiey.igank.ui.base.BaseActivity;
+import com.ro0kiey.igank.utils.FileUtils;
+import com.ro0kiey.igank.utils.ShareUtils;
 import com.ro0kiey.igank.utils.ToastUtils;
 
 import java.io.File;
-import java.io.FileOutputStream;
 
 public class MeiziActivity extends BaseActivity {
 
@@ -73,6 +70,14 @@ public class MeiziActivity extends BaseActivity {
             case R.id.save_meizi:
                 checkPermission();
                 break;
+            case R.id.share:
+                imageView.setDrawingCacheEnabled(true);
+                Bitmap bitmap = imageView.getDrawingCache();
+                File file = FileUtils.generateFile("igank", meiziUrl);
+                Uri uri = FileUtils.saveBitmapToSDCard(file, bitmap, meiziUrl);
+                imageView.setDrawingCacheEnabled(false);
+                ShareUtils.shareImage(this, uri, R.string.share_meizi_to_friend);
+                break;
             default:
                 break;
         }
@@ -84,7 +89,17 @@ public class MeiziActivity extends BaseActivity {
                 != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(MeiziActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         } else {
-            saveMeiziImage(meiziUrl);
+            imageView.setDrawingCacheEnabled(true);
+            Bitmap bitmap = imageView.getDrawingCache();
+            File file = FileUtils.generateFile("igank", meiziUrl);
+            if (FileUtils.checkFileExisted(file)){
+                ToastUtils.SnackBarShort(imageView, R.string.already_saved);
+            } else {
+                FileUtils.saveBitmapToSDCard(file, bitmap, meiziUrl);
+                sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
+                ToastUtils.SnackBarShort(imageView, R.string.save_success);
+                imageView.setDrawingCacheEnabled(false);
+            }
         }
     }
 
@@ -93,38 +108,15 @@ public class MeiziActivity extends BaseActivity {
         switch (requestCode){
             case 1:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    saveMeiziImage(meiziUrl);
+                    imageView.setDrawingCacheEnabled(true);
+                    Bitmap bitmap = imageView.getDrawingCache();
+                    File file = FileUtils.generateFile("igank", meiziUrl);
+                    FileUtils.saveBitmapToSDCard(file, bitmap, meiziUrl);
+                    imageView.setDrawingCacheEnabled(false);
                 }
                 break;
             default:
                 break;
         }
     }
-
-    private void saveMeiziImage(String url) {
-        Bitmap bitmap = imageView.getDrawingCache();
-        File appDir = new File(Environment.getExternalStorageDirectory().getPath(), "igank/");
-        if (!appDir.exists()){
-            appDir.mkdirs();
-        }
-        String fileName = url.substring(8, url.length() - 4).replace("/", "-") + ".jpg";
-        File file = new File(appDir, fileName);
-        if (!file.exists()){
-            try {
-                FileOutputStream os = new FileOutputStream(file);
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
-                os.flush();
-                os.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            this.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
-            ToastUtils.SnackBarShort(imageView, R.string.save_success);
-        } else {
-            ToastUtils.SnackBarShort(imageView, R.string.already_saved);
-        }
-        imageView.setDrawingCacheEnabled(false);
-        Log.d("MeiziActivity", "saveMeiziImage: ");
-    }
-
 }

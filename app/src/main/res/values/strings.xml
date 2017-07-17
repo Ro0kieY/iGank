@@ -10,4 +10,7 @@
     <string name="save_success">成功收下妹纸...</string>
     <string name="already_saved">妹纸已经躺在图库里了...</string>
 
+    <string name="share_app">发现了一款看妹子的小app「iGank」,  同时有很多程序员干货哦</string>
+    <string name="share_app_to_friend">分享「iGank」给您的朋友</string>
+    <string name="share_meizi_to_friend">分享「妹纸福利」给您的朋友</string>
 </resources>

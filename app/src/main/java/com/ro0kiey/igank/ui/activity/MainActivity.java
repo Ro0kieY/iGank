@@ -92,6 +92,7 @@ public class MainActivity extends TranslucentStatusBarActivity {
                 break;
             case R.id.refresh:
                 refreshMeiziData(Config.LOAD_IMAGE_COUNT, Config.LOAD_IMAGE_PAGE);
+                break;
             default:
                 break;
         }
