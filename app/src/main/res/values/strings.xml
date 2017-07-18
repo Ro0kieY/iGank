@@ -13,4 +13,8 @@
     <string name="share_app">发现了一款看妹子的小app「iGank」,  同时有很多程序员干货哦</string>
     <string name="share_app_to_friend">分享「iGank」给您的朋友</string>
     <string name="share_meizi_to_friend">分享「妹纸福利」给您的朋友</string>
+
+    <string name="copy_success">已复制到剪贴板</string>
+    <string name="open_link_failed">打开链接失败</string>
+
 </resources>

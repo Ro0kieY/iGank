@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,6 +24,7 @@ import com.ro0kiey.igank.http.RetrofitClient;
 import com.ro0kiey.igank.model.Bean.GankBean;
 import com.ro0kiey.igank.model.DailyGank;
 import com.ro0kiey.igank.ui.base.BaseActivity;
+import com.ro0kiey.igank.utils.ShareUtils;
 import com.ro0kiey.igank.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -60,6 +62,7 @@ public class GankActivity extends BaseActivity {
 
         imageView = (ImageView)findViewById(R.id.gank_image_view);
         fab = (FloatingActionButton)findViewById(R.id.activity_gank_fab);
+        fab.setVisibility(View.INVISIBLE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,6 +89,7 @@ public class GankActivity extends BaseActivity {
         rv_gank.setLayoutManager(layoutManager);
 
         getDailyGank(year, month, day);
+        fab.setVisibility(View.VISIBLE);
 
     }
 
@@ -113,11 +117,19 @@ public class GankActivity extends BaseActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.gank_activity_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
                 onBackPressed();
                 break;
+            case R.id.share:
+                ShareUtils.shareApp(this, R.string.share_app, R.string.share_app_to_friend);
             default:
                 break;
         }
@@ -149,6 +161,12 @@ public class GankActivity extends BaseActivity {
             mGankBean.addAll(dailyGank.getResults().getAPP());
         }
         return mGankBean;
+    }
+
+    @Override
+    public void onBackPressed() {
+        fab.setVisibility(View.INVISIBLE);
+        super.onBackPressed();
     }
 
     @Override

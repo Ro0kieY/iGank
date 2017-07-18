@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -21,7 +23,6 @@ public class WebActivity extends BaseActivity {
 
     private WebView webView;
     private Toolbar toolbar;
-    private WebSettings settings;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,15 +58,32 @@ public class WebActivity extends BaseActivity {
     }
 
     private void setWebViewSettings(WebView webView, String Url) {
-        settings = webView.getSettings();
+        WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
-        settings.setUseWideViewPort(true);
         settings.setLoadWithOverviewMode(true);
         settings.setAppCacheEnabled(true);
+        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         settings.setSupportZoom(true);
         webView.setWebChromeClient(new WebChromeClient());
-        webView.setWebViewClient(new WebViewClient());
+        webView.setWebViewClient(new ViewClient());
         webView.loadUrl(Url);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+            switch (keyCode) {
+                case KeyEvent.KEYCODE_BACK:
+                    if (webView.canGoBack()) {
+                        webView.goBack();
+                    } else {
+                        finish();
+                    }
+                    return true;
+            }
+        }
+        //return false;
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -73,4 +91,22 @@ public class WebActivity extends BaseActivity {
         return R.layout.activity_web;
     }
 
+    private class ViewClient extends WebViewClient {
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            if (url != null){
+                view.loadUrl(url);
+            }
+            return true;
+        }
+
+        /*@Override
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            if (request.getUrl().toString() != null){
+                view.loadUrl(request.getUrl().toString());
+            }
+            return true;
+        }*/
+    }
 }
