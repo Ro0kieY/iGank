@@ -55,7 +55,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), WebActivity.class);
-                intent.putExtra("VideoUrl", gankBean.getUrl());
+                intent.putExtra("title", gankBean.getDesc());
+                intent.putExtra("Url", gankBean.getUrl());
                 v.getContext().startActivity(intent);
             }
         });

@@ -49,8 +49,7 @@ public class MeiziActivity extends BaseActivity {
                 imageView.setImageBitmap(resource);
             }
         });
-
-
+        imageView.setDrawingCacheEnabled(false);
     }
 
     @Override

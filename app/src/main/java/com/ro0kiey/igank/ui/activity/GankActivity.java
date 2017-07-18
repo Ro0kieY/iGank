@@ -67,7 +67,8 @@ public class GankActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(GankActivity.this, WebActivity.class);
-                intent.putExtra("VideoUrl", mGankBean.get(0).getUrl());
+                intent.putExtra("title", mGankBean.get(0).getDesc());
+                intent.putExtra("Url", mGankBean.get(0).getUrl());
                 startActivity(intent);
             }
         });
