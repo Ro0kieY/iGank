@@ -2,5 +2,12 @@
 <resources>
     <dimen name="fab_margin">30dp</dimen>
     <dimen name="toolbar_text_size">40sp</dimen>
+    <dimen name="about_title_text_size">20sp</dimen>
+    <dimen name="about_text_size">15sp</dimen>
+    <dimen name="about_margin_left">10dp</dimen>
+    <dimen name="about_margin_top">10dp</dimen>
+    <dimen name="about_margin_bottom">10dp</dimen>
+    <dimen name="about_margin_right">10dp</dimen>
+    <dimen name="app_name_text_size">25dp</dimen>
 
 </resources>

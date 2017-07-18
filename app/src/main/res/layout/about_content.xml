@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+<LinearLayout
+
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/about_margin_bottom"
+        android:layout_marginTop="@dimen/about_margin_top"
+        android:layout_marginLeft="@dimen/about_margin_left"
+        android:text="@string/title_introduce"
+        android:textColor="@color/Black"
+        android:textSize="@dimen/about_title_text_size"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_introduce"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/cardview_light_background"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/about_margin_left"
+            android:layout_marginRight="@dimen/about_margin_right"
+            android:autoLink="web"
+            android:lineSpacingExtra="2dp"
+            android:text="@string/introduce"
+            android:textColor="@color/Black"
+            android:textSize="@dimen/about_text_size" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="12dp"
+        android:background="@color/Black" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/about_margin_bottom"
+        android:layout_marginTop="@dimen/about_margin_top"
+        android:layout_marginLeft="@dimen/about_margin_left"
+        android:text="@string/developers"
+        android:textColor="@color/Black"
+        android:textSize="@dimen/about_title_text_size"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_developer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/cardview_light_background"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="@dimen/about_margin_left"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tv_ro0kiey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/iv_avatar"
+            android:layout_toEndOf="@id/iv_avatar"
+            android:layout_toRightOf="@id/iv_avatar"
+            android:layout_marginLeft="@dimen/about_margin_left"
+            android:text="Ro0kieY"
+            android:textSize="@dimen/about_text_size"
+            android:textColor="@color/Black"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_ro0kiey"
+            android:layout_toEndOf="@id/iv_avatar"
+            android:layout_toRightOf="@id/iv_avatar"
+            android:layout_marginTop="@dimen/about_margin_top"
+            android:layout_marginLeft="@dimen/about_margin_left"
+            android:autoLink="all"
+            android:text="@string/my_github"
+            android:textSize="@dimen/about_text_size"
+            android:textColor="@color/Black"
+            tools:ignore="HardcodedText"
+            />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="12dp"
+        android:background="@color/Black" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/about_margin_bottom"
+        android:layout_marginTop="@dimen/about_margin_top"
+        android:layout_marginLeft="@dimen/about_margin_left"
+        android:textSize="@dimen/about_title_text_size"
+        android:text="@string/thanks"
+        android:textColor="@color/Black" />
+
+    <RelativeLayout
+        android:id="@+id/rl_thanks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/cardview_light_background"
+        android:padding="10dp"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:autoLink="web"
+            android:lineSpacingExtra="2dp"
+            android:text="@string/thanks_content"
+            android:textColor="@color/Black"
+            android:textSize="@dimen/about_text_size" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="12dp"
+        android:background="@color/Black" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/about_margin_bottom"
+        android:layout_marginTop="@dimen/about_margin_top"
+        android:layout_marginLeft="@dimen/about_margin_left"
+        android:text="@string/open_source"
+        android:textSize="@dimen/about_title_text_size"
+        android:textColor="@color/Black" />
+
+    <RelativeLayout
+        android:id="@+id/rl_open_source"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@color/cardview_light_background"
+        android:padding="10dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/open_source_libraries_list"
+            android:textColor="@color/Black"
+            android:textSize="@dimen/about_text_size"
+            tools:ignore="HardcodedText" />
+
+    </RelativeLayout>
+
+</LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>
