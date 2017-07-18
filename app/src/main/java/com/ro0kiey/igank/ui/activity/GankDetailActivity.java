@@ -2,13 +2,17 @@ package com.ro0kiey.igank.ui.activity;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -26,7 +30,8 @@ public class GankDetailActivity extends BaseActivity {
 
     private Toolbar toolbar;
     private WebView webView;
-    private String DetailUrl;
+    private String detailUrl;
+    private String title;
 
     @Override
     protected int getLayoutId() {
@@ -37,9 +42,11 @@ public class GankDetailActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        detailUrl = getIntent().getStringExtra("DetailUrl");
+        title = getIntent().getStringExtra("title");
+
         initView();
 
-        DetailUrl = getIntent().getStringExtra("DetailUrl");
         webView = (WebView)findViewById(R.id.gd_webview);
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
@@ -47,9 +54,9 @@ public class GankDetailActivity extends BaseActivity {
         settings.setAppCacheEnabled(true);
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         settings.setSupportZoom(true);
-        webView.setWebViewClient(new WebViewClient());
+        webView.setWebViewClient(new ViewClient());
         webView.setWebChromeClient(new WebChromeClient());
-        webView.loadUrl(DetailUrl);
+        webView.loadUrl(detailUrl);
     }
 
     private void initView() {
@@ -59,6 +66,7 @@ public class GankDetailActivity extends BaseActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+        actionBar.setTitle(title);
     }
 
     @Override
@@ -74,16 +82,16 @@ public class GankDetailActivity extends BaseActivity {
                 onBackPressed();
                 break;
             case R.id.refresh:
-                webView.loadUrl(DetailUrl);
+                webView.reload();
                 break;
             case R.id.copy_link:
-                ClipUtils.copyToClipBoard(this, DetailUrl);
+                ClipUtils.copyToClipBoard(this, detailUrl);
                 ToastUtils.ToastShort(this, R.string.copy_success);
                 break;
             case R.id.open_link:
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW);
-                Uri uri = Uri.parse(DetailUrl);
+                Uri uri = Uri.parse(detailUrl);
                 intent.setData(uri);
                 if (intent.resolveActivity(getPackageManager()) != null){
                     startActivity(intent);
@@ -95,5 +103,42 @@ public class GankDetailActivity extends BaseActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+            switch (keyCode) {
+                case KeyEvent.KEYCODE_BACK:
+                    if (webView.canGoBack()) {
+                        webView.goBack();
+                    } else {
+                        finish();
+                    }
+                    return true;
+            }
+        }
+        //return false;
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private class ViewClient extends WebViewClient {
+
+        /*@Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            if (url != null){
+                view.loadUrl(url);
+            }
+            return true;
+        }*/
+
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            if (request.getUrl().toString() != null){
+                view.loadUrl(request.getUrl().toString());
+            }
+            return true;
+        }
     }
 }

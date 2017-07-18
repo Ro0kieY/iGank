@@ -65,48 +65,12 @@ public class WebActivity extends BaseActivity {
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         settings.setSupportZoom(true);
         webView.setWebChromeClient(new WebChromeClient());
-        webView.setWebViewClient(new ViewClient());
+        webView.setWebViewClient(new WebViewClient());
         webView.loadUrl(Url);
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (event.getAction() == KeyEvent.ACTION_DOWN) {
-            switch (keyCode) {
-                case KeyEvent.KEYCODE_BACK:
-                    if (webView.canGoBack()) {
-                        webView.goBack();
-                    } else {
-                        finish();
-                    }
-                    return true;
-            }
-        }
-        //return false;
-        return super.onKeyDown(keyCode, event);
     }
 
     @Override
     protected int getLayoutId() {
         return R.layout.activity_web;
-    }
-
-    private class ViewClient extends WebViewClient {
-
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (url != null){
-                view.loadUrl(url);
-            }
-            return true;
-        }
-
-        /*@Override
-        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-            if (request.getUrl().toString() != null){
-                view.loadUrl(request.getUrl().toString());
-            }
-            return true;
-        }*/
     }
 }
