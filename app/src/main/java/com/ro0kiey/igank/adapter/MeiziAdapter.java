@@ -82,7 +82,7 @@ public class MeiziAdapter extends RecyclerView.Adapter<MeiziAdapter.ViewHolder> 
             }
         });
         Glide.with(mContext).load(meizi.getUrl()).centerCrop().crossFade().into(holder.imageView);
-        runEnterAnimation(holder, position);
+        //runEnterAnimation(holder, position);
     }
 
     @Override
