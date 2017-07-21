@@ -13,7 +13,7 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.ro0kiey.igank.Config;
 import com.ro0kiey.igank.R;
-import com.ro0kiey.igank.Widget.IRecyclerView;
+import com.ro0kiey.igank.ui.widget.IRecyclerView;
 import com.ro0kiey.igank.adapter.MeiziAdapter;
 import com.ro0kiey.igank.model.Bean.MeiziBean;
 import com.ro0kiey.igank.mvp.presenter.MainPresenter;

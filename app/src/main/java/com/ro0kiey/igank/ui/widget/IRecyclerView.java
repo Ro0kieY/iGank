@@ -1,4 +1,4 @@
-package com.ro0kiey.igank.Widget;
+package com.ro0kiey.igank.ui.widget;
 
 import android.content.Context;
 import android.support.annotation.Nullable;

@@ -16,13 +16,13 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             >
 
-                <com.ro0kiey.igank.Widget.IRecyclerView
+                <com.ro0kiey.igank.ui.widget.IRecyclerView
                     android:id="@+id/rv_meizi"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     >
 
-                </com.ro0kiey.igank.Widget.IRecyclerView>
+                </com.ro0kiey.igank.ui.widget.IRecyclerView>
 
         </android.support.v4.widget.SwipeRefreshLayout>
 
