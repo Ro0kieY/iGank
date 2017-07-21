@@ -33,9 +33,4 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     protected abstract void initPresenter();
 
-    @Override
-    protected void onDestroy() {
-        presenter.detachView();
-        super.onDestroy();
-    }
 }

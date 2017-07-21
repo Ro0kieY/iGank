@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/lightBlack</item>
         <item name="colorPrimaryDark">@color/Black</item>
-        <item name="colorAccent">@color/silver</item>
+        <item name="colorAccent">@color/Black</item>
     </style>
 
     <style name="CollapsingToolbarTitleStyle" parent="@android:style/TextAppearance">

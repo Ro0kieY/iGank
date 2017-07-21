@@ -5,7 +5,7 @@
 
     <item android:id="@+id/refresh"
         android:title="Refresh"
-        android:icon="@mipmap/ic_autorenew_white_48dp"
+        android:icon="@mipmap/refresh"
         app:showAsAction="always"/>
 
     <item android:id="@+id/about"

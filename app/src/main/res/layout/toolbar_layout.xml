@@ -14,7 +14,8 @@
             android:layout_height="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+            android:layout_marginTop="25dp"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
             app:titleTextColor="@color/White">
 
         </android.support.v7.widget.Toolbar>

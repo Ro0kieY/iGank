@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.ro0kiey.igank.Config;
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.SharedElement;
@@ -70,10 +70,11 @@ public class MeiziAdapter extends RecyclerView.Adapter<MeiziAdapter.ViewHolder> 
             }
         });
         holder.imageView.setBackgroundColor(Color.argb(200, red, green, blue));
+        Glide.with(mContext).load(meizi.getUrl()).centerCrop().crossFade().into(holder.imageView);
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedElement.SharedDrawable = holder.imageView.getDrawable();
+                //SharedElement.SharedDrawable = holder.imageView.getDrawable();
 
                 Intent intent = new Intent(mContext, MeiziActivity.class);
                 intent.putExtra("Url", meizi.getUrl());
@@ -81,7 +82,7 @@ public class MeiziAdapter extends RecyclerView.Adapter<MeiziAdapter.ViewHolder> 
                 ActivityCompat.startActivity(mContext, intent, options.toBundle());
             }
         });
-        Glide.with(mContext).load(meizi.getUrl()).centerCrop().crossFade().into(holder.imageView);
+
         //runEnterAnimation(holder, position);
     }
 

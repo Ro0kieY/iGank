@@ -18,6 +18,4 @@ public abstract class BasePresenter<T extends IBaseView> {
         this.iView = iView;
         this.context = context;
     }
-
-    public abstract void detachView();
 }

@@ -28,7 +28,7 @@
             android:layout_below="@id/rv_gank_type"
             android:layout_margin="5dp"
             android:paddingTop="7dp"
-            android:src="@mipmap/ic_chevron_double_right_grey600_24dp"
+            android:src="@mipmap/list_item_double_right"
             />
 
         <TextView

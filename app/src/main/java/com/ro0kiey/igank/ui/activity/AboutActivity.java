@@ -16,22 +16,33 @@ import com.bumptech.glide.Glide;
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.utils.ShareUtils;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by Ro0kieY on 2017/7/4.
  */
 
 public class AboutActivity extends AppCompatActivity {
 
+    @BindView(R.id.about_image_view)
+    ImageView imageView;
+    @BindView(R.id.about_toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbar;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+        ButterKnife.bind(this);
 
-        Toolbar toolbar = (Toolbar)findViewById(R.id.about_toolbar);
-        CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
-        ImageView imageView = (ImageView)findViewById(R.id.about_image_view);
+        initView();
+    }
+
+    private void initView() {
         collapsingToolbar.setTitle("About Me");
-
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -55,7 +66,7 @@ public class AboutActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.share:
                 ShareUtils.shareApp(this, R.string.share_app, R.string.share_app_to_friend);
                 break;

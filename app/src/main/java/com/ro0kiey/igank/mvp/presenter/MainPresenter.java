@@ -1,6 +1,7 @@
 package com.ro0kiey.igank.mvp.presenter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.ro0kiey.igank.http.RetrofitClient;
@@ -8,6 +9,8 @@ import com.ro0kiey.igank.model.Bean.MeiziBean;
 import com.ro0kiey.igank.model.Meizi;
 import com.ro0kiey.igank.model.休息视频;
 import com.ro0kiey.igank.mvp.view.IMainView;
+import com.ro0kiey.igank.ui.activity.AboutActivity;
+import com.ro0kiey.igank.ui.activity.ListActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +32,6 @@ public class MainPresenter extends BasePresenter<IMainView> {
 
     public MainPresenter(IMainView iView, Context context) {
         super(iView, context);
-    }
-
-    @Override
-    public void detachView() {
-        this.iView = null;
     }
 
     public void getMeiziData(int count, int page){
@@ -152,6 +150,18 @@ public class MainPresenter extends BasePresenter<IMainView> {
             }
         }
         return meiziList;
+    }
+
+    public void toAboutActivity(){
+        Intent intent = new Intent(this.context, AboutActivity.class);
+        this.context.startActivity(intent);
+    }
+
+
+    public void toListActivity() {
+        Intent intent = new Intent(this.context, ListActivity.class);
+        intent.putExtra("type", "ANDROID");
+        this.context.startActivity(intent);
     }
 
 }

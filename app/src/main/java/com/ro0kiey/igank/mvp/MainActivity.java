@@ -2,15 +2,18 @@ package com.ro0kiey.igank.mvp;
 
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.ro0kiey.igank.Config;
 import com.ro0kiey.igank.R;
+import com.ro0kiey.igank.Widget.IRecyclerView;
 import com.ro0kiey.igank.adapter.MeiziAdapter;
 import com.ro0kiey.igank.model.Bean.MeiziBean;
 import com.ro0kiey.igank.mvp.presenter.MainPresenter;
@@ -32,18 +35,23 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
     @BindView(R.id.appbarlayout)
     AppBarLayout appbarlayout;
     @BindView(R.id.rv_meizi)
-    RecyclerView rv_meizi;
+    IRecyclerView rv_meizi;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
+    @BindView(R.id.actionmenu)
+    FloatingActionMenu fab;
+    @BindView(R.id.menu_item_to_list)
+    FloatingActionButton floatButtonList;
+    @BindView(R.id.menu_item_singleColoumLayout)
+    FloatingActionButton floatButtonGrid;
+    @BindView(R.id.menu_item_twoColoumLayout)
+    FloatingActionButton floatButtonListStaggered;
 
     private MainPresenter mPresenter;
     private List<MeiziBean> meiziList = new ArrayList<>();
     private MeiziAdapter adapter;
     private int count = Config.LOAD_IMAGE_COUNT;
-    private int[] lastPostition = new int[2];
-    private int[] lastCompletePosition = new int[2];
+    private StaggeredGridLayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,9 +80,19 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
 
     public void initView() {
 
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+        layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        rv_meizi.setFloatActionMenu(fab);
+        rv_meizi.setLoadMoreListener(new IRecyclerView.LoadMoreListener() {
+            @Override
+            public void loadMore() {
+                count = count + Config.LOAD_IMAGE_COUNT;
+                mPresenter.loadMoreMeizi(count, Config.LOAD_IMAGE_PAGE);
+            }
+        });
         rv_meizi.setLayoutManager(layoutManager);
-        rv_meizi.addOnScrollListener(getLoadMoreListener(layoutManager));
         adapter = new MeiziAdapter(meiziList);
         rv_meizi.setAdapter(adapter);
 
@@ -110,25 +128,49 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
         adapter.notifyDataSetChanged();
     }
 
-    private RecyclerView.OnScrollListener getLoadMoreListener(final StaggeredGridLayoutManager manager) {
-        return new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                Log.d("onScrolled", "dy " + dy);
-                manager.findLastVisibleItemPositions(lastPostition);
-                manager.findLastCompletelyVisibleItemPositions(lastCompletePosition);
-                if (lastPostition[1] == adapter.getItemCount() - 1) {
-                    count += Config.LOAD_IMAGE_COUNT;
-                    mPresenter.loadMoreMeizi(count, Config.LOAD_IMAGE_PAGE);
-                }
-            }
-        };
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.about:
+                mPresenter.toAboutActivity();
+                break;
+            case R.id.refresh:
+                count = Config.LOAD_IMAGE_COUNT;
+                mPresenter.refreshMeiziData(count, Config.LOAD_IMAGE_PAGE);
+                layoutManager.smoothScrollToPosition(rv_meizi, null, 0);
+                break;
+            default:
+                break;
+        }
+        return false;
+    }
 
-
-    @OnClick(R.id.fab)
+    @OnClick(R.id.actionmenu)
     public void onViewClicked() {
         rv_meizi.smoothScrollToPosition(0);
+    }
+
+    @OnClick({R.id.actionmenu, R.id.menu_item_to_list, R.id.menu_item_singleColoumLayout, R.id.menu_item_twoColoumLayout})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.actionmenu:
+                rv_meizi.smoothScrollToPosition(0);
+                break;
+            case R.id.menu_item_to_list:
+                mPresenter.toListActivity();
+                break;
+            case R.id.menu_item_singleColoumLayout:
+                layoutManager.setSpanCount(1);
+                break;
+            case R.id.menu_item_twoColoumLayout:
+                layoutManager.setSpanCount(2);
+                break;
+        }
     }
 }

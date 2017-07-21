@@ -57,7 +57,7 @@ public class MainActivity extends TranslucentStatusBarActivity {
         adapter = new MeiziAdapter(meiziList);
         rv_meizi.setAdapter(adapter);
 
-        fab = (FloatingActionButton)findViewById(R.id.fab);
+        fab = (FloatingActionButton)findViewById(R.id.actionmenu);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
