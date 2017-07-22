@@ -17,6 +17,7 @@ import com.ro0kiey.igank.utils.ClipUtils;
 import com.ro0kiey.igank.utils.ToastUtils;
 
 /**
+ * WebActivity的Presenter
  * Created by Ro0kieY on 2017/7/22.
  */
 

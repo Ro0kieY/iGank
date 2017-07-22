@@ -15,6 +15,7 @@ import com.ro0kiey.igank.mvp.presenter.WebPresenter;
 import com.ro0kiey.igank.mvp.view.IWebView;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
 /**
@@ -51,6 +52,8 @@ public class WebActivity extends BaseActivity<WebPresenter> implements IWebView 
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
         super.onCreate(savedInstanceState);
 
+        ButterKnife.bind(this);
+
         initView();
         mPresenter.initWebSettings(webView, url);
 
@@ -60,10 +63,8 @@ public class WebActivity extends BaseActivity<WebPresenter> implements IWebView 
 
         url = getIntent().getStringExtra("Url");
         title = getIntent().getStringExtra("title");
-        webView = (WebView)findViewById(R.id.gd_webview);
-        progressBar = (MaterialProgressBar)findViewById(R.id.gank_detail_progress_bar);
 
-        super.actionBar.setTitle(title);
+        actionBar.setTitle(title);
     }
 
     @Override

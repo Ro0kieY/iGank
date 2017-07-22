@@ -19,7 +19,7 @@ import com.bumptech.glide.Glide;
 import com.ro0kiey.igank.Config;
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.model.Bean.MeiziBean;
-import com.ro0kiey.igank.ui.activity.GankActivity;
+import com.ro0kiey.igank.mvp.GankActivity;
 import com.ro0kiey.igank.mvp.MeiziActivity;
 
 import java.util.List;

@@ -2,12 +2,14 @@ package com.ro0kiey.igank.ui.widget;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.util.Log;
 
 import com.github.clans.fab.FloatingActionMenu;
+import com.ro0kiey.igank.Config;
 
 /**
  * Created by Ro0kieY on 2017/7/21.
@@ -53,11 +55,18 @@ public class IRecyclerView extends RecyclerView {
             }
         }
         manager = getLayoutManager();
-        int[] pos = new int[2];
-        ((StaggeredGridLayoutManager) manager).findLastVisibleItemPositions(pos);
         int totalItemCount = manager.getItemCount();
-        if (pos[1] >= totalItemCount - (((StaggeredGridLayoutManager) manager).getSpanCount() * 2)){
-            listener.loadMore();
+        if (manager instanceof StaggeredGridLayoutManager){
+            int[] pos = new int[2];
+            ((StaggeredGridLayoutManager) manager).findLastVisibleItemPositions(pos);
+            if (pos[1] >= totalItemCount - (((StaggeredGridLayoutManager) manager).getSpanCount() * 2)) {
+                listener.loadMore();
+            }
+        } else if (manager instanceof LinearLayoutManager){
+            int position = ((LinearLayoutManager) manager).findLastVisibleItemPosition();
+            if (position >= totalItemCount - (Config.LOAD_LIST_COUNT / 2)){
+                listener.loadMore();
+            }
         }
     }
 

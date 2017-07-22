@@ -2,42 +2,44 @@ package com.ro0kiey.igank.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.ro0kiey.igank.Config;
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.adapter.ListAdapter;
-import com.ro0kiey.igank.http.RetrofitClient;
 import com.ro0kiey.igank.model.Bean.GankBean;
-import com.ro0kiey.igank.model.GankList;
+import com.ro0kiey.igank.mvp.presenter.FragmentPresenter;
+import com.ro0kiey.igank.mvp.view.IFragmentView;
 import com.ro0kiey.igank.ui.base.BaseFragment;
+import com.ro0kiey.igank.ui.widget.IRecyclerView;
 import com.ro0kiey.igank.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
+ * ListActivity中的Fragment
  * Created by Ro0kieY on 2017/7/12.
  */
 
-public class TabLayoutFragment extends BaseFragment {
+public class TabLayoutFragment extends BaseFragment<FragmentPresenter> implements IFragmentView {
 
-    private RecyclerView recyclerView;
+    @BindView(R.id.fragment_recyclerview)
+    IRecyclerView recyclerView;
+    Unbinder unbinder;
+
     private ListAdapter adapter;
     private String mParam;
     private List<GankBean> mGankBeanList = new ArrayList<>();
-    private int lastPosition;
-    private int lastCompletePosition;
     private int mListCount = Config.LOAD_LIST_COUNT;
+    private FragmentPresenter mPresenter;
 
     public static TabLayoutFragment newInstance(String param) {
         TabLayoutFragment fragment = new TabLayoutFragment();
@@ -50,6 +52,9 @@ public class TabLayoutFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ButterKnife.bind(this.getActivity());
+
         if (getArguments() != null) {
             mParam = getArguments().getString("type");
         }
@@ -61,10 +66,21 @@ public class TabLayoutFragment extends BaseFragment {
     }
 
     @Override
+    protected void initPresenter() {
+        this.mPresenter = new FragmentPresenter(this, this);
+    }
+
+    @Override
     protected void initView() {
-        recyclerView = (RecyclerView) view.findViewById(R.id.fragment_recyclerview);
+        recyclerView = (IRecyclerView) view.findViewById(R.id.fragment_recyclerview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
-        recyclerView.addOnScrollListener(getLoadMoreListener(layoutManager));
+        recyclerView.setLoadMoreListener(new IRecyclerView.LoadMoreListener() {
+            @Override
+            public void loadMore() {
+                mListCount += Config.LOAD_LIST_COUNT;
+                mPresenter.getMoreData(mParam, mListCount, Config.LOAD_LIST_PAGE);
+            }
+        });
         recyclerView.setLayoutManager(layoutManager);
     }
 
@@ -73,36 +89,35 @@ public class TabLayoutFragment extends BaseFragment {
         switch (mParam) {
             case "ANDROID":
                 mParam = "Android";
-                getListData(mParam, Config.LOAD_LIST_COUNT, Config.LOAD_LIST_PAGE);
+                mPresenter.getListData(mParam, Config.LOAD_LIST_COUNT, Config.LOAD_LIST_PAGE);
                 break;
             case "IOS":
                 mParam = "iOS";
-                getListData(mParam, Config.LOAD_LIST_COUNT, Config.LOAD_LIST_PAGE);
+                mPresenter.getListData(mParam, Config.LOAD_LIST_COUNT, Config.LOAD_LIST_PAGE);
                 break;
             case "APP":
                 mParam = "App";
-                getListData(mParam, Config.LOAD_LIST_COUNT, Config.LOAD_LIST_PAGE);
+                mPresenter.getListData(mParam, Config.LOAD_LIST_COUNT, Config.LOAD_LIST_PAGE);
                 break;
             case "瞎推荐":
                 mParam = "瞎推荐";
-                getListData(mParam, Config.LOAD_LIST_COUNT, Config.LOAD_LIST_PAGE);
+                mPresenter.getListData(mParam, Config.LOAD_LIST_COUNT, Config.LOAD_LIST_PAGE);
                 break;
             case "拓展资源":
                 mParam = "拓展资源";
-                getListData(mParam, Config.LOAD_LIST_COUNT, Config.LOAD_LIST_PAGE);
+                mPresenter.getListData(mParam, Config.LOAD_LIST_COUNT, Config.LOAD_LIST_PAGE);
                 break;
             case "前端":
                 mParam = "前端";
-                getListData(mParam, Config.LOAD_LIST_COUNT, Config.LOAD_LIST_PAGE);
+                mPresenter.getListData(mParam, Config.LOAD_LIST_COUNT, Config.LOAD_LIST_PAGE);
                 break;
             case "休息视频":
                 mParam = "休息视频";
-                getListData(mParam, Config.LOAD_LIST_COUNT, Config.LOAD_LIST_PAGE);
+                mPresenter.getListData(mParam, Config.LOAD_LIST_COUNT, Config.LOAD_LIST_PAGE);
                 break;
             default:
                 break;
         }
-        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -120,93 +135,47 @@ public class TabLayoutFragment extends BaseFragment {
 
     }
 
-    private RecyclerView.OnScrollListener getLoadMoreListener(final LinearLayoutManager manager) {
-        return new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                Log.d("onScrolled", "dy " + dy);
-                lastCompletePosition = manager.findLastCompletelyVisibleItemPosition();
-                lastPosition = manager.findLastVisibleItemPosition();
-                if (lastPosition >= adapter.getItemCount() - 3) {
-                    mListCount += Config.LOAD_LIST_COUNT;
-                    getMoreList(mParam, mListCount, Config.LOAD_LIST_PAGE);
-                }
-            }
-        };
+    @Override
+    public void showProgress() {
+
     }
 
-    private void getMoreList(String type, int count, int page) {
+    @Override
+    public void hideProgress() {
 
-        RetrofitClient.getApiServiceInstance().getListGank(type, count, page)
-                .map(new Function<GankList, List<GankBean>>() {
-                    @Override
-                    public List<GankBean> apply(@NonNull GankList gankList) throws Exception {
-                        //int oldSize = mGankBeanList.size();
-                        //mGankBeanList.clear();
-                        //adapter.notifyItemRangeRemoved(0, oldSize);
-                        return addMoreListWithTypeList(gankList);
-                    }
-                }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<GankBean>>() {
-                    @Override
-                    public void accept(@NonNull List<GankBean> gankBeen) throws Exception {
-                        //adapter.notifyDataSetChanged();
-                        adapter.notifyItemRangeChanged(mGankBeanList.size() - Config.LOAD_IMAGE_COUNT, Config.LOAD_IMAGE_COUNT);
-                        //adapter.notifyItemRangeInserted(0, mGankBeanList.size());
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(@NonNull Throwable throwable) throws Exception {
-                        if (lastPosition == lastCompletePosition){
-                            ToastUtils.SnackBarShort(view, R.string.load_list_failed);
-                        } else {
-                            return;
-                        }
-                    }
-                });
     }
 
-    private void getListData(String type, int count, int page) {
-        RetrofitClient.getApiServiceInstance().getListGank(type, count, page)
-                .map(new Function<GankList, List<GankBean>>() {
-                    @Override
-                    public List<GankBean> apply(@NonNull GankList gankList) throws Exception {
-                        //mGankBeanList.clear();
-                        return createListWithTypeList(gankList);
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<GankBean>>() {
-                    @Override
-                    public void accept(@NonNull List<GankBean> gankBean) throws Exception {
-                        adapter = new ListAdapter(mGankBeanList);
-                        recyclerView.setAdapter(adapter);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(@NonNull Throwable throwable) throws Exception {
-                        Snackbar.make(view, "无法获得详细信息", Snackbar.LENGTH_SHORT).show();
-                    }
-                });
+    @Override
+    public void showMoreList(List<GankBean> gankBean) {
+        mGankBeanList.clear();
+        mGankBeanList.addAll(gankBean);
+        adapter.notifyItemRangeChanged(mGankBeanList.size() - Config.LOAD_LIST_COUNT, Config.LOAD_LIST_COUNT);
     }
 
-    private List<GankBean> createListWithTypeList(GankList gankList) {
-        if (gankList != null) {
-            for (int i = 0; i < gankList.getResults().size(); i++) {
-                mGankBeanList.add(gankList.getResults().get(i));
-            }
-        }
-        return mGankBeanList;
+    @Override
+    public void showLoadFailed() {
+        ToastUtils.SnackBarShort(view, R.string.load_list_failed);
     }
 
-    private List<GankBean> addMoreListWithTypeList(GankList gankList) {
-        if (gankList != null){
-            for (int i = mGankBeanList.size(); i < gankList.getResults().size(); i++){
-                mGankBeanList.add(gankList.getResults().get(i));
-            }
-        }
-        return mGankBeanList;
+    @Override
+    public void showListData(List<GankBean> gankBean) {
+        mGankBeanList.clear();
+        mGankBeanList.addAll(gankBean);
+        adapter = new ListAdapter(mGankBeanList);
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

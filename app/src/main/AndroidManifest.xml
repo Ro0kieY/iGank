@@ -34,7 +34,7 @@
             android:launchMode="singleTask"
             android:label="@string/app_name" />
         <activity
-            android:name=".ui.activity.GankActivity"
+            android:name=".mvp.GankActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"
             android:label="@string/app_name" />
@@ -44,7 +44,7 @@
             android:launchMode="singleTask"
             android:label="@string/app_name" />
         <activity
-            android:name=".ui.activity.ListActivity"
+            android:name=".mvp.ListActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"
             android:label="@string/app_name" />

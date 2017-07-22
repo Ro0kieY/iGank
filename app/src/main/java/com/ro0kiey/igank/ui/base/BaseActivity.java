@@ -10,13 +10,14 @@ import android.view.KeyEvent;
 
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.mvp.presenter.BasePresenter;
+import com.ro0kiey.igank.mvp.view.IBaseView;
 import com.ro0kiey.igank.mvp.view.IMeiziView;
 
 /**
  * Created by Ro0kieY on 2017/7/2.
  */
 
-public abstract class BaseActivity<M extends BasePresenter<IMeiziView>> extends AppCompatActivity {
+public abstract class BaseActivity<M extends BasePresenter<IBaseView>> extends AppCompatActivity {
 
     private Toolbar toolbar;
     //private AppBarLayout appBarLayout;
