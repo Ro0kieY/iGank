@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -68,14 +67,16 @@ public class WebPresenter extends BasePresenter<IWebView> {
 
     private class ViewClient extends WebViewClient {
 
-        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-            if (request.getUrl().toString() != null) {
-                view.loadUrl(request.getUrl().toString());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                if (request.getUrl().toString() != null) {
+                    view.loadUrl(request.getUrl().toString());
+                }
             }
             return true;
         }
+
     }
 
     private class ChromeClient extends WebChromeClient {

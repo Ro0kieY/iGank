@@ -20,7 +20,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     protected P presenter;
     protected ActionBar actionBar;
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
