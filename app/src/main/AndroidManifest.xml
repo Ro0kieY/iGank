@@ -14,7 +14,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".mvp.MainActivity">
+        <activity android:name=".mvp.MainActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,19 +25,33 @@
         </activity>
         <activity
             android:name=".mvp.MeiziActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             android:label="@string/app_name" />
         <activity
             android:name=".mvp.AboutActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             android:label="@string/app_name" />
         <activity
             android:name=".ui.activity.GankActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             android:label="@string/app_name" />
         <activity
-            android:name=".ui.activity.WebActivity"
-            android:screenOrientation="landscape"
+            android:name=".mvp.VideoActivity"
+            android:configChanges="orientation"
+            android:launchMode="singleTask"
             android:label="@string/app_name" />
         <activity
             android:name=".ui.activity.ListActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".mvp.WebActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             android:label="@string/app_name" />
 
     </application>

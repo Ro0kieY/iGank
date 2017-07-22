@@ -11,8 +11,9 @@ import android.widget.TextView;
 
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.model.Bean.GankBean;
-import com.ro0kiey.igank.ui.activity.WebActivity;
+import com.ro0kiey.igank.mvp.VideoActivity;
 import com.ro0kiey.igank.ui.activity.ListActivity;
+import com.ro0kiey.igank.mvp.WebActivity;
 import com.ro0kiey.igank.utils.TextUtils;
 
 import java.util.List;
@@ -45,10 +46,17 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.ViewHolder> {
         holder.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), WebActivity.class);
-                intent.putExtra("title", gankBean.getDesc());
-                intent.putExtra("Url", gankBean.getUrl());
-                v.getContext().startActivity(intent);
+                if (gankBean.getType().equals("休息视频")){
+                    Intent intent = new Intent(v.getContext(), VideoActivity.class);
+                    intent.putExtra("title", gankBean.getDesc());
+                    intent.putExtra("Url", gankBean.getUrl());
+                    v.getContext().startActivity(intent);
+                } else {
+                    Intent intent = new Intent(v.getContext(), WebActivity.class);
+                    intent.putExtra("title", gankBean.getDesc());
+                    intent.putExtra("Url", gankBean.getUrl());
+                    v.getContext().startActivity(intent);
+                }
             }
         });
         if (position == 0){

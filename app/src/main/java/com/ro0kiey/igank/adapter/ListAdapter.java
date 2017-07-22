@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.model.Bean.GankBean;
-import com.ro0kiey.igank.ui.activity.WebActivity;
+import com.ro0kiey.igank.mvp.VideoActivity;
 
 import java.util.List;
 
@@ -54,7 +54,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         holder.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), WebActivity.class);
+                Intent intent = new Intent(v.getContext(), VideoActivity.class);
                 intent.putExtra("title", gankBean.getDesc());
                 intent.putExtra("Url", gankBean.getUrl());
                 v.getContext().startActivity(intent);

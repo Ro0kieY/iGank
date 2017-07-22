@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,11 +14,11 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.ro0kiey.igank.Config;
 import com.ro0kiey.igank.R;
-import com.ro0kiey.igank.ui.widget.IRecyclerView;
 import com.ro0kiey.igank.adapter.MeiziAdapter;
 import com.ro0kiey.igank.model.Bean.MeiziBean;
 import com.ro0kiey.igank.mvp.presenter.MainPresenter;
 import com.ro0kiey.igank.mvp.view.IMainView;
+import com.ro0kiey.igank.ui.widget.IRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
     FloatingActionButton floatButtonGrid;
     @BindView(R.id.menu_item_twoColoumLayout)
     FloatingActionButton floatButtonListStaggered;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     private MainPresenter mPresenter;
     private List<MeiziBean> meiziList = new ArrayList<>();
@@ -132,7 +135,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
     public void showMoreMeizi(List<MeiziBean> meiziBean) {
         meiziList.clear();
         meiziList.addAll(meiziBean);
-        adapter.notifyItemRangeChanged(count - Config.LOAD_IMAGE_COUNT ,count -1);
+        adapter.notifyItemRangeChanged(count - Config.LOAD_IMAGE_COUNT, count - 1);
     }
 
     @Override

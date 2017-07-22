@@ -43,9 +43,7 @@ public class AboutActivity extends AppCompatActivity {
 
     private void initView() {
         collapsingToolbar.setTitle("About Me");
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

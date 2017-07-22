@@ -23,6 +23,7 @@ import com.ro0kiey.igank.adapter.GankAdapter;
 import com.ro0kiey.igank.http.RetrofitClient;
 import com.ro0kiey.igank.model.Bean.GankBean;
 import com.ro0kiey.igank.model.DailyGank;
+import com.ro0kiey.igank.mvp.VideoActivity;
 import com.ro0kiey.igank.mvp.presenter.BasePresenter;
 import com.ro0kiey.igank.mvp.view.IMeiziView;
 import com.ro0kiey.igank.ui.base.BaseActivity;
@@ -68,7 +69,7 @@ public class GankActivity extends BaseActivity<BasePresenter<IMeiziView>> {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(GankActivity.this, WebActivity.class);
+                Intent intent = new Intent(GankActivity.this, VideoActivity.class);
                 intent.putExtra("title", mGankBean.get(0).getDesc());
                 intent.putExtra("Url", mGankBean.get(0).getUrl());
                 startActivity(intent);
