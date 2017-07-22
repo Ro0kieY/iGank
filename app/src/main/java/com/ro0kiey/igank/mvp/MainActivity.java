@@ -129,6 +129,13 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
     }
 
     @Override
+    public void showMoreMeizi(List<MeiziBean> meiziBean) {
+        meiziList.clear();
+        meiziList.addAll(meiziBean);
+        adapter.notifyItemRangeChanged(count - Config.LOAD_IMAGE_COUNT ,count -1);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar, menu);
         return super.onCreateOptionsMenu(menu);

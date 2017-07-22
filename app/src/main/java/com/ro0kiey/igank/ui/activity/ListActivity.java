@@ -11,13 +11,15 @@ import android.view.MenuItem;
 
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.adapter.ViewPagerAdapter;
+import com.ro0kiey.igank.mvp.presenter.BasePresenter;
+import com.ro0kiey.igank.mvp.view.IMeiziView;
 import com.ro0kiey.igank.ui.base.BaseActivity;
 import com.ro0kiey.igank.ui.fragment.TabLayoutFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListActivity extends BaseActivity {
+public class ListActivity extends BaseActivity<BasePresenter<IMeiziView>> {
 
     private Toolbar toolbar;
     private TabLayout tabLayout;

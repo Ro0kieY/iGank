@@ -2,14 +2,13 @@ package com.ro0kiey.igank.mvp.presenter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.ro0kiey.igank.http.RetrofitClient;
 import com.ro0kiey.igank.model.Bean.MeiziBean;
 import com.ro0kiey.igank.model.Meizi;
 import com.ro0kiey.igank.model.休息视频;
+import com.ro0kiey.igank.mvp.AboutActivity;
 import com.ro0kiey.igank.mvp.view.IMainView;
-import com.ro0kiey.igank.ui.activity.AboutActivity;
 import com.ro0kiey.igank.ui.activity.ListActivity;
 
 import java.util.ArrayList;
@@ -76,7 +75,6 @@ public class MainPresenter extends BasePresenter<IMainView> {
                 }).map(new Function<Meizi, List<MeiziBean>>() {
             @Override
             public List<MeiziBean> apply(Meizi meizi) throws Exception {
-                Log.d("MainActivity", "apply: " + meizi.results.size() + meizi.toString());
                 return addMoreMeizi(meizi);
             }
         }).subscribeOn(Schedulers.io())
@@ -84,7 +82,8 @@ public class MainPresenter extends BasePresenter<IMainView> {
                 .subscribe(new Consumer<List<MeiziBean>>() {
                     @Override
                     public void accept(@NonNull List<MeiziBean> meiziBean) throws Exception {
-                        iView.showMeiziData(meiziBean);
+                        iView.showMoreMeizi(meiziBean);
+                        //iView.showMeiziData(meiziBean);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

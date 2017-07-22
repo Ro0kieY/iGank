@@ -1,4 +1,4 @@
-package com.ro0kiey.igank.ui.activity;
+package com.ro0kiey.igank.mvp;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -49,13 +49,13 @@ public class AboutActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AboutActivity.this.onBackPressed();
+                onBackPressed();
             }
         });
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             collapsingToolbar.setCollapsedTitleTextColor(getColor(R.color.White));
         }
-        Glide.with(this).load(R.mipmap.ic_launcher).into(imageView);
+        Glide.with(this).load(R.mipmap.ic_launcher).centerCrop().into(imageView);
     }
 
     @Override

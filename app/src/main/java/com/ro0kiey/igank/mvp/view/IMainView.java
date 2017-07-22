@@ -15,4 +15,6 @@ public interface IMainView extends IBaseView {
 
     void showMeiziData(List<MeiziBean> meiziBean);
 
+    void showMoreMeizi(List<MeiziBean> meiziBean);
+
 }

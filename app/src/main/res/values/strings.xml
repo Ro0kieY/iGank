@@ -8,7 +8,8 @@
     <string name="load_list_failed">无法获得更多内容...</string>
 
     <string name="save_success">成功收下妹纸...</string>
-    <string name="already_saved">妹纸已经躺在图库里了...</string>
+    <string name="already_saved">不要再点了，妹纸已经躺在图库里了...</string>
+    <string name="girl_reject">妹纸拒绝了你的请求...</string>
 
     <string name="share_app">发现了一款看妹子的小app「iGank」,  同时有很多程序员干货哦</string>
     <string name="share_app_to_friend">分享「iGank」给您的朋友</string>
@@ -17,17 +18,28 @@
     <string name="copy_success">已复制到剪贴板</string>
     <string name="open_link_failed">打开链接失败</string>
 
+    <string name="about_author">Ro0kieY</string>
+    <string name="app_version">Version 1.0.0</string>
     <string name="title_introduce">项目介绍</string>
     <string name="introduce">「iGank」是干货集中营的非官方客户端之一，每天提供精选的妹纸图片、休息视频、若干Android，IOS，Web等相关的技术干货。
-        \n本项目完全开源，由Ro0kieY完成，是自学Android开发的产物。
-        \n项目借鉴了drakeet的Meizi以及panl的Gank.lu等众多开源项目，感谢开源社区。
+        \n本项目完全开源，由Ro0kieY完成，是利用业余时间自学Android开发的产物。
+        \n项目借鉴了Github上的众多开源项目，感谢开源社区。
         \n数据来源: 干货集中营 http://gank.io/api</string>
     <string name="open_source">用到的开源库</string>
-    <string name="open_source_libraries_list">com.google.code.gson:gson:2.8.1\ncom.squareup.retrofit2:retrofit:2.3.0\ncom.squareup.retrofit2:adapter-rxjava2:2.3.0\nio.reactivex.rxjava2:rxandroid:2.0.1\nio.reactivex.rxjava2:rxjava:2.1.0\ncom.github.bumptech.glide:glide:3.8.0\nme.zhanghai.android.materialprogressbar:library:1.4.1
+    <string name="open_source_libraries_list">com.google.code.gson:gson:2.8.1
+        \ncom.squareup.retrofit2:retrofit:2.3.0
+        \ncom.squareup.retrofit2:adapter-rxjava2:2.3.0
+        \nio.reactivex.rxjava2:rxandroid:2.0.1
+        \nio.reactivex.rxjava2:rxjava:2.1.0
+        \ncom.github.bumptech.glide:glide:3.8.0
+        \nme.zhanghai.android.materialprogressbar:library:1.4.1
+        \ncom.jakewharton:butterknife:8.7.0
+        \ncom.github.clans:fab:1.6.4
     </string>
     <string name="developers">开发者</string>
     <string name="my_github">我的Github: https://github.com/ro0kiey</string>
     <string name="thanks">特别感谢</string>
-    <string name="thanks_content"></string>
+    <string name="thanks_content">drakeet https://github.com/drakeet/Meizhi
+        \nPanl \t\t\thttps://github.com/Panl/Gank.io</string>
 
 </resources>

@@ -7,10 +7,10 @@
     android:background="@color/lightBlack"
     android:fitsSystemWindows="true"
     android:clipToPadding="true"
-    tools:context="com.ro0kiey.igank.ui.activity.MeiziActivity"
+    tools:context="com.ro0kiey.igank.mvp.MeiziActivity"
     >
 
-    <include layout="@layout/toolbar_layout"/>
+    <include layout="@layout/toolbar_no_margin_layout"/>
 
     <ImageView
         android:id="@+id/meizi_image"

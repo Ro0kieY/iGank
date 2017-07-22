@@ -23,6 +23,8 @@ import com.ro0kiey.igank.adapter.GankAdapter;
 import com.ro0kiey.igank.http.RetrofitClient;
 import com.ro0kiey.igank.model.Bean.GankBean;
 import com.ro0kiey.igank.model.DailyGank;
+import com.ro0kiey.igank.mvp.presenter.BasePresenter;
+import com.ro0kiey.igank.mvp.view.IMeiziView;
 import com.ro0kiey.igank.ui.base.BaseActivity;
 import com.ro0kiey.igank.utils.ShareUtils;
 import com.ro0kiey.igank.utils.ToastUtils;
@@ -40,7 +42,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by Ro0kieY on 2017/7/5.
  */
 
-public class GankActivity extends BaseActivity {
+public class GankActivity extends BaseActivity<BasePresenter<IMeiziView>> {
 
     private ImageView imageView;
     private RecyclerView rv_gank;

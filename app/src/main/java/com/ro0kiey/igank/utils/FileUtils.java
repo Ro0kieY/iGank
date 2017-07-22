@@ -25,46 +25,48 @@ public class FileUtils {
     }
 
     /**
-     * 生成文件存储路径
-     * @param path
+     * 生成存储路径
      * @param name
      * @return
      */
-    public static File generateFile(String path, String name){
-        File appDir = new File(Environment.getExternalStorageDirectory(), path);
-        if (!appDir.exists()){
+    public static File generateFilePath(String name){
+        File appDir = new File(Environment.getExternalStorageDirectory(), "igank");
+        if (!appDir.exists()) {
             appDir.mkdirs();
         }
-        String fileName = name.replace("/", "-") + ".jpg";
+        String fileName = name.replace("/", "-") + "-girl.jpg";
         File file = new File(appDir, fileName);
         return file;
     }
 
     /**
-     * 检测文件是否存在
+     * 检查文件是否已经存在
      * @param file
      * @return
      */
-    public static boolean checkFileExisted(File file){
+    public static boolean checkIsSaved(File file){
         return file.exists();
     }
 
     /**
      * 保存Bitmap到SD卡
-     * @param file
      * @param bitmap
      * @param name
      * @return
      */
-    public static Uri saveBitmapToSDCard(File file, Bitmap bitmap, String name) {
-            try {
-                FileOutputStream os = new FileOutputStream(file);
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
-                os.flush();
-                os.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+    public static Uri saveBitmapToSDCard(Bitmap bitmap, String name) {
+        File file = generateFilePath(name);
+        FileOutputStream outputStream;
+        try {
+            outputStream = new FileOutputStream(file);
+            assert bitmap != null;
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            outputStream.flush();
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
         return Uri.fromFile(file);
     }
 }

@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/save_meizi"
-        android:icon="@drawable/ic_floppy_white_48dp"
+        android:icon="@mipmap/save"
         android:title="Save"
         app:showAsAction="always">
 
@@ -12,7 +12,7 @@
 
     <item android:id="@+id/share"
         android:title="Share"
-        android:icon="@drawable/ic_share_variant_white_48dp"
+        android:icon="@mipmap/share"
         app:showAsAction="always"/>
 
 </menu>

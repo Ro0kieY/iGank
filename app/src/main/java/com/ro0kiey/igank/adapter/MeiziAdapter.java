@@ -16,13 +16,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.ro0kiey.igank.Config;
 import com.ro0kiey.igank.R;
-import com.ro0kiey.igank.SharedElement;
 import com.ro0kiey.igank.model.Bean.MeiziBean;
 import com.ro0kiey.igank.ui.activity.GankActivity;
-import com.ro0kiey.igank.ui.activity.MeiziActivity;
+import com.ro0kiey.igank.mvp.MeiziActivity;
 
 import java.util.List;
 
