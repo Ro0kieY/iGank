@@ -11,8 +11,8 @@
  - 沉浸式状态栏
  - 下拉刷新，上拉加载更多
  - 线性、流式布局动态切换
- - TabLayout + ViewPager + Fragment  
- <p>更多详情请查看源码...<p/>
+ - TabLayout + ViewPager + Fragment <p/> 
+[更多详情请查看源码...](https://github.com/Ro0kieY/iGank)
 
 ## 效果预览
 <img src="screenshots/Screenshot_1500727643.png" width="216" height="384"><img src="screenshots/Screenshot_1500727663.png" width="216" height="384"><img src="screenshots/Screenshot_1500727671.png" width="216" height="384">  
@@ -22,3 +22,4 @@
 ## 数据来源
 干货集中营 http://gank.io/api
 
+[我的简书](http://www.jianshu.com/u/3b14773e6aee)
