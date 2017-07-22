@@ -82,6 +82,8 @@ public class MeiziActivity extends BaseActivity<MeiziPresenter> implements IMeiz
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
             case R.id.save_meizi:
                 mPresenter.saveMeiziImage(bitmap, meiziUrl);
                 break;
