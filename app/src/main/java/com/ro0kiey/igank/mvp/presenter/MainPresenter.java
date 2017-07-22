@@ -7,9 +7,9 @@ import com.ro0kiey.igank.http.RetrofitClient;
 import com.ro0kiey.igank.model.Bean.MeiziBean;
 import com.ro0kiey.igank.model.Meizi;
 import com.ro0kiey.igank.model.休息视频;
-import com.ro0kiey.igank.mvp.AboutActivity;
+import com.ro0kiey.igank.ui.activity.AboutActivity;
 import com.ro0kiey.igank.mvp.view.IMainView;
-import com.ro0kiey.igank.mvp.ListActivity;
+import com.ro0kiey.igank.ui.activity.ListActivity;
 
 import java.util.ArrayList;
 import java.util.List;

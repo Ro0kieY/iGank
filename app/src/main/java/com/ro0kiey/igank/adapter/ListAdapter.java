@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.model.Bean.GankBean;
-import com.ro0kiey.igank.mvp.VideoActivity;
+import com.ro0kiey.igank.ui.activity.VideoActivity;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.ro0kiey.igank.mvp;
+package com.ro0kiey.igank.ui.activity;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -16,6 +16,7 @@ import com.ro0kiey.igank.Config;
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.mvp.presenter.MeiziPresenter;
 import com.ro0kiey.igank.mvp.view.IMeiziView;
+import com.ro0kiey.igank.ui.base.BaseActivity;
 import com.ro0kiey.igank.utils.ShareUtils;
 import com.ro0kiey.igank.utils.ToastUtils;
 
@@ -61,9 +62,7 @@ public class MeiziActivity extends BaseActivity<MeiziPresenter> implements IMeiz
         //imageView.setDrawingCacheEnabled(false);
 
         //imageView转场动画有闪烁，做了许多尝试，目前来看还没有得到完美的解决
-        //imageView.setImageDrawable(SharedElement.SharedDrawable);
         //Glide.with(this).load(meiziUrl).into(imageView);
-        //imageView.setImageBitmap(SharedElement.SharedBitmap);
         Glide.with(this).load(meiziUrl).asBitmap().into(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {

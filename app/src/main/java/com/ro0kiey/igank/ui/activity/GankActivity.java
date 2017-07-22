@@ -1,4 +1,4 @@
-package com.ro0kiey.igank.mvp;
+package com.ro0kiey.igank.ui.activity;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -25,6 +25,7 @@ import com.ro0kiey.igank.adapter.GankAdapter;
 import com.ro0kiey.igank.model.Bean.GankBean;
 import com.ro0kiey.igank.mvp.presenter.GankPresenter;
 import com.ro0kiey.igank.mvp.view.IGankView;
+import com.ro0kiey.igank.ui.base.BaseActivity;
 import com.ro0kiey.igank.utils.ShareUtils;
 import com.ro0kiey.igank.utils.ToastUtils;
 

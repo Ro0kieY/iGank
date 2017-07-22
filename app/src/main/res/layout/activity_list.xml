@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ro0kiey.igank.mvp.ListActivity">
+    tools:context="com.ro0kiey.igank.ui.activity.ListActivity">
 
     <include layout="@layout/toolbar_no_margin_layout"/>
 

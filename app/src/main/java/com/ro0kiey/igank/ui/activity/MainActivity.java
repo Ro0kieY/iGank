@@ -1,4 +1,4 @@
-package com.ro0kiey.igank.mvp;
+package com.ro0kiey.igank.ui.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -18,6 +18,7 @@ import com.ro0kiey.igank.adapter.MeiziAdapter;
 import com.ro0kiey.igank.model.Bean.MeiziBean;
 import com.ro0kiey.igank.mvp.presenter.MainPresenter;
 import com.ro0kiey.igank.mvp.view.IMainView;
+import com.ro0kiey.igank.ui.base.BaseActivity;
 import com.ro0kiey.igank.ui.widget.IRecyclerView;
 
 import java.util.ArrayList;

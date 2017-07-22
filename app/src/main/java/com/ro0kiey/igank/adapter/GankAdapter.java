@@ -11,9 +11,9 @@ import android.widget.TextView;
 
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.model.Bean.GankBean;
-import com.ro0kiey.igank.mvp.VideoActivity;
-import com.ro0kiey.igank.mvp.ListActivity;
-import com.ro0kiey.igank.mvp.WebActivity;
+import com.ro0kiey.igank.ui.activity.VideoActivity;
+import com.ro0kiey.igank.ui.activity.ListActivity;
+import com.ro0kiey.igank.ui.activity.WebActivity;
 import com.ro0kiey.igank.utils.TextUtils;
 
 import java.util.List;

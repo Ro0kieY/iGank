@@ -1,4 +1,4 @@
-package com.ro0kiey.igank.mvp;
+package com.ro0kiey.igank.ui.activity;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.mvp.presenter.BasePresenter;
 import com.ro0kiey.igank.mvp.view.IBaseView;
+import com.ro0kiey.igank.ui.base.BaseActivity;
 import com.ro0kiey.igank.utils.ShareUtils;
 
 import butterknife.BindView;

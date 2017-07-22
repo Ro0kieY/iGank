@@ -1,4 +1,4 @@
-package com.ro0kiey.igank.mvp;
+package com.ro0kiey.igank.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,6 +12,7 @@ import android.webkit.WebView;
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.mvp.presenter.WebPresenter;
 import com.ro0kiey.igank.mvp.view.IWebView;
+import com.ro0kiey.igank.ui.base.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

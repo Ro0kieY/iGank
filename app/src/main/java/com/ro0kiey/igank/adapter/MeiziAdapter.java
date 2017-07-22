@@ -19,8 +19,8 @@ import com.bumptech.glide.Glide;
 import com.ro0kiey.igank.Config;
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.model.Bean.MeiziBean;
-import com.ro0kiey.igank.mvp.GankActivity;
-import com.ro0kiey.igank.mvp.MeiziActivity;
+import com.ro0kiey.igank.ui.activity.GankActivity;
+import com.ro0kiey.igank.ui.activity.MeiziActivity;
 
 import java.util.List;
 
@@ -72,7 +72,6 @@ public class MeiziAdapter extends RecyclerView.Adapter<MeiziAdapter.ViewHolder> 
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //SharedElement.SharedDrawable = holder.imageView.getDrawable();
 
                 Intent intent = new Intent(mContext, MeiziActivity.class);
                 intent.putExtra("Url", meizi.getUrl());
