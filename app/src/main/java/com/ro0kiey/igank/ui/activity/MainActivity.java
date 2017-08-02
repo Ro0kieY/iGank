@@ -13,6 +13,9 @@ import android.view.WindowManager;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.ro0kiey.igank.Config;
+
+import com.ro0kiey.igank.DaggerMainComponent;
+import com.ro0kiey.igank.MainModule;
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.adapter.MeiziAdapter;
 import com.ro0kiey.igank.model.Bean.MeiziBean;
@@ -23,6 +26,8 @@ import com.ro0kiey.igank.ui.widget.IRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,7 +56,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    private MainPresenter mPresenter;
+    @Inject
+    MainPresenter mPresenter;
+
     private List<MeiziBean> meiziList = new ArrayList<>();
     private MeiziAdapter adapter;
     private int count = Config.LOAD_IMAGE_COUNT;
@@ -62,9 +69,11 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
-
+        DaggerMainComponent.builder().mainModule(new MainModule(this, this)).build().inject(this);
         initView();
         initData();
+
+
     }
 
     private void initData() {
@@ -79,7 +88,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
 
     @Override
     protected void initPresenter() {
-        mPresenter = new MainPresenter(this, this);
+        //mPresenter = new MainPresenter(this, this);
     }
 
     public void initView() {

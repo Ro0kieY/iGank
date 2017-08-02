@@ -13,12 +13,16 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.ro0kiey.igank.Config;
+import com.ro0kiey.igank.DaggerMeiziComponent;
+import com.ro0kiey.igank.MeiziModule;
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.mvp.presenter.MeiziPresenter;
 import com.ro0kiey.igank.mvp.view.IMeiziView;
 import com.ro0kiey.igank.ui.base.BaseActivity;
 import com.ro0kiey.igank.utils.ShareUtils;
 import com.ro0kiey.igank.utils.ToastUtils;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,8 +33,11 @@ public class MeiziActivity extends BaseActivity<MeiziPresenter> implements IMeiz
     Toolbar toolbar;
     @BindView(R.id.meizi_image)
     ImageView imageView;
+
+    @Inject
+    MeiziPresenter mPresenter;
+
     private String meiziUrl;
-    private MeiziPresenter mPresenter;
     private Bitmap bitmap;
 
     @Override
@@ -38,7 +45,7 @@ public class MeiziActivity extends BaseActivity<MeiziPresenter> implements IMeiz
         super.onCreate(savedInstanceState);
 
         ButterKnife.bind(this);
-
+        DaggerMeiziComponent.builder().meiziModule(new MeiziModule(this, this)).build().inject(this);
         initView();
 
     }
@@ -50,7 +57,7 @@ public class MeiziActivity extends BaseActivity<MeiziPresenter> implements IMeiz
 
     @Override
     protected void initPresenter() {
-        this.mPresenter = new MeiziPresenter(this, this);
+        //this.mPresenter = new MeiziPresenter(this, this);
     }
 
     private void initView() {

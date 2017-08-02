@@ -9,10 +9,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 
+import com.ro0kiey.igank.DaggerWebComponent;
 import com.ro0kiey.igank.R;
+import com.ro0kiey.igank.WebModule;
 import com.ro0kiey.igank.ui.base.BaseActivity;
 import com.ro0kiey.igank.mvp.presenter.WebPresenter;
 import com.ro0kiey.igank.mvp.view.IWebView;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,9 +35,11 @@ public class WebActivity extends BaseActivity<WebPresenter> implements IWebView 
     @BindView(R.id.gd_webview)
     WebView webView;
 
+    @Inject
+    WebPresenter mPresenter;
+
     private String url;
     private String title;
-    private WebPresenter mPresenter;
 
     @Override
     protected int getLayoutId() {
@@ -42,7 +48,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements IWebView 
 
     @Override
     protected void initPresenter() {
-        this.mPresenter = new WebPresenter(this, this);
+        //this.mPresenter = new WebPresenter(this, this);
     }
 
     @Override
@@ -53,7 +59,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements IWebView 
         super.onCreate(savedInstanceState);
 
         ButterKnife.bind(this);
-
+        DaggerWebComponent.builder().webModule(new WebModule(this, this)).build().inject(this);
         initView();
         mPresenter.initWebSettings(webView, url);
 

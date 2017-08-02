@@ -11,6 +11,8 @@ import com.ro0kiey.igank.utils.FileUtils;
 
 import java.io.File;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -27,6 +29,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MeiziPresenter extends BasePresenter<IMeiziView> {
 
+    @Inject
     public MeiziPresenter(IMeiziView iView, Context context) {
         super(iView, context);
     }

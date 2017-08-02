@@ -15,6 +15,8 @@ import com.ro0kiey.igank.mvp.view.IWebView;
 import com.ro0kiey.igank.utils.ClipUtils;
 import com.ro0kiey.igank.utils.ToastUtils;
 
+import javax.inject.Inject;
+
 /**
  * WebActivity的Presenter
  * Created by Ro0kieY on 2017/7/22.
@@ -22,6 +24,7 @@ import com.ro0kiey.igank.utils.ToastUtils;
 
 public class WebPresenter extends BasePresenter<IWebView> {
 
+    @Inject
     public WebPresenter(IWebView iView, Context context) {
         super(iView, context);
     }

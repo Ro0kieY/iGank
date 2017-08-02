@@ -20,6 +20,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.ro0kiey.igank.Config;
+import com.ro0kiey.igank.DaggerGankComponent;
+import com.ro0kiey.igank.GankModule;
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.adapter.GankAdapter;
 import com.ro0kiey.igank.model.Bean.GankBean;
@@ -31,6 +33,8 @@ import com.ro0kiey.igank.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,17 +54,20 @@ public class GankActivity extends BaseActivity<GankPresenter> implements IGankVi
     @BindView(R.id.activity_gank_fab)
     FloatingActionButton fab;
 
+    @Inject
+    GankPresenter mPresenter;
+
     private GankAdapter adapter;
     private List<GankBean> mGankBean = new ArrayList<>();
     private ActionBar actionBar;
-    private GankPresenter mPresenter;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         ButterKnife.bind(this);
-
+        DaggerGankComponent.builder().gankModule(new GankModule(this, this)).build().inject(this);
         initView();
         initData();
 
@@ -73,7 +80,7 @@ public class GankActivity extends BaseActivity<GankPresenter> implements IGankVi
 
     @Override
     protected void initPresenter() {
-        this.mPresenter = new GankPresenter(this, this);
+        //this.mPresenter = new GankPresenter(this, this);
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)

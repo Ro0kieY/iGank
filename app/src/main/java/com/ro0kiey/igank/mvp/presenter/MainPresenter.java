@@ -14,6 +14,8 @@ import com.ro0kiey.igank.ui.activity.ListActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -29,6 +31,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MainPresenter extends BasePresenter<IMainView> {
 
+    @Inject
     public MainPresenter(IMainView iView, Context context) {
         super(iView, context);
     }
