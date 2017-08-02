@@ -1,9 +1,9 @@
-package com.ro0kiey.igank;
+package com.ro0kiey.igank.di.module;
 
 import android.content.Context;
 
+import com.ro0kiey.igank.mvp.view.IBaseView;
 import com.ro0kiey.igank.mvp.view.IMeiziView;
-import com.ro0kiey.igank.mvp.view.IWebView;
 
 import dagger.Module;
 import dagger.Provides;
@@ -13,18 +13,18 @@ import dagger.Provides;
  */
 
 @Module
-public class WebModule {
+public class MeiziModule {
 
-    private IWebView view;
+    private IMeiziView view;
     private Context context;
 
-    public WebModule(IWebView view, Context context) {
+    public MeiziModule(IMeiziView view, Context context) {
         this.view = view;
         this.context = context;
     }
 
     @Provides
-    IWebView provideIWebView(){
+    IMeiziView provideIMeiziView(){
         return view;
     }
 

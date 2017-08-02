@@ -1,6 +1,6 @@
-package com.ro0kiey.igank;
+package com.ro0kiey.igank.di.component;
 
-import com.ro0kiey.igank.ui.activity.ListActivity;
+import com.ro0kiey.igank.di.module.MeiziModule;
 import com.ro0kiey.igank.ui.activity.MeiziActivity;
 
 import dagger.Component;

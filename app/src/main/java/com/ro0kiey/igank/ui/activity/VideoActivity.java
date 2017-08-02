@@ -9,9 +9,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 
-import com.ro0kiey.igank.DaggerWebComponent;
 import com.ro0kiey.igank.R;
-import com.ro0kiey.igank.WebModule;
+import com.ro0kiey.igank.di.component.DaggerWebComponent;
+import com.ro0kiey.igank.di.module.WebModule;
 import com.ro0kiey.igank.mvp.presenter.WebPresenter;
 import com.ro0kiey.igank.mvp.view.IWebView;
 import com.ro0kiey.igank.ui.base.BaseActivity;

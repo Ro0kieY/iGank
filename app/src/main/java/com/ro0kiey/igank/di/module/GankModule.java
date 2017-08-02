@@ -1,9 +1,8 @@
-package com.ro0kiey.igank;
+package com.ro0kiey.igank.di.module;
 
 import android.content.Context;
 
-import com.ro0kiey.igank.mvp.view.IBaseView;
-import com.ro0kiey.igank.mvp.view.IMainView;
+import com.ro0kiey.igank.mvp.view.IGankView;
 
 import dagger.Module;
 import dagger.Provides;
@@ -13,18 +12,18 @@ import dagger.Provides;
  */
 
 @Module
-public class MainModule {
+public class GankModule {
 
-    private IMainView view;
+    private IGankView view;
     private Context context;
 
-    public MainModule(IMainView view, Context context) {
+    public GankModule(IGankView view, Context context) {
         this.view = view;
         this.context = context;
     }
 
     @Provides
-    IMainView provideIMainView(){
+    IGankView provideIGankView(){
         return view;
     }
 

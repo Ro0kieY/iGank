@@ -14,8 +14,8 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.ro0kiey.igank.Config;
 
-import com.ro0kiey.igank.DaggerMainComponent;
-import com.ro0kiey.igank.MainModule;
+import com.ro0kiey.igank.di.component.DaggerMainComponent;
+import com.ro0kiey.igank.di.module.MainModule;
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.adapter.MeiziAdapter;
 import com.ro0kiey.igank.model.Bean.MeiziBean;

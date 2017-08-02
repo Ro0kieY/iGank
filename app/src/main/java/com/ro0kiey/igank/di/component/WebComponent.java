@@ -1,5 +1,6 @@
-package com.ro0kiey.igank;
+package com.ro0kiey.igank.di.component;
 
+import com.ro0kiey.igank.di.module.WebModule;
 import com.ro0kiey.igank.ui.activity.VideoActivity;
 import com.ro0kiey.igank.ui.activity.WebActivity;
 

@@ -1,5 +1,6 @@
-package com.ro0kiey.igank;
+package com.ro0kiey.igank.di.component;
 
+import com.ro0kiey.igank.di.module.MainModule;
 import com.ro0kiey.igank.ui.activity.MainActivity;
 
 import dagger.Component;

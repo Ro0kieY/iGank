@@ -8,8 +8,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.ro0kiey.igank.DaggerListComponent;
-import com.ro0kiey.igank.ListModule;
+import com.ro0kiey.igank.di.component.DaggerListComponent;
+import com.ro0kiey.igank.di.module.ListModule;
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.adapter.ViewPagerAdapter;
 import com.ro0kiey.igank.ui.base.BaseActivity;

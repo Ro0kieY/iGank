@@ -20,8 +20,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.ro0kiey.igank.Config;
-import com.ro0kiey.igank.DaggerGankComponent;
-import com.ro0kiey.igank.GankModule;
+import com.ro0kiey.igank.di.component.DaggerGankComponent;
+import com.ro0kiey.igank.di.module.GankModule;
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.adapter.GankAdapter;
 import com.ro0kiey.igank.model.Bean.GankBean;
