@@ -31,12 +31,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         if (actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
-        initPresenter();
     }
 
     protected abstract int getLayoutId();
-
-    protected abstract void initPresenter();
 
 }

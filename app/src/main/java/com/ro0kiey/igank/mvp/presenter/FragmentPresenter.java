@@ -10,6 +10,8 @@ import com.ro0kiey.igank.mvp.view.IFragmentView;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
@@ -22,6 +24,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class FragmentPresenter extends BasePresenter<IFragmentView> {
 
+    @Inject
     public FragmentPresenter(IFragmentView iView, Fragment fragment) {
         super(iView, fragment);
     }

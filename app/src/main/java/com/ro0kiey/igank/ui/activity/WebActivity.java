@@ -10,8 +10,8 @@ import android.view.View;
 import android.webkit.WebView;
 
 import com.ro0kiey.igank.R;
-import com.ro0kiey.igank.di.component.DaggerWebComponent;
-import com.ro0kiey.igank.di.module.WebModule;
+import com.ro0kiey.igank.di.component.DaggerActivityComponent;
+import com.ro0kiey.igank.di.module.ActivityModule;
 import com.ro0kiey.igank.ui.base.BaseActivity;
 import com.ro0kiey.igank.mvp.presenter.WebPresenter;
 import com.ro0kiey.igank.mvp.view.IWebView;
@@ -47,11 +47,6 @@ public class WebActivity extends BaseActivity<WebPresenter> implements IWebView 
     }
 
     @Override
-    protected void initPresenter() {
-        //this.mPresenter = new WebPresenter(this, this);
-    }
-
-    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         /*requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -59,7 +54,8 @@ public class WebActivity extends BaseActivity<WebPresenter> implements IWebView 
         super.onCreate(savedInstanceState);
 
         ButterKnife.bind(this);
-        DaggerWebComponent.builder().webModule(new WebModule(this, this)).build().inject(this);
+        DaggerActivityComponent.builder().activityModule(new ActivityModule(this, this)).build().injectWebActivity(this);
+
         initView();
         mPresenter.initWebSettings(webView, url);
 

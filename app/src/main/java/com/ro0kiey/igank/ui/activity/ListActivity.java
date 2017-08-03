@@ -8,10 +8,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.ro0kiey.igank.di.component.DaggerListComponent;
-import com.ro0kiey.igank.di.module.ListModule;
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.adapter.ViewPagerAdapter;
+import com.ro0kiey.igank.di.component.DaggerActivityComponent;
+import com.ro0kiey.igank.di.module.ActivityModule;
 import com.ro0kiey.igank.ui.base.BaseActivity;
 import com.ro0kiey.igank.mvp.presenter.ListPresenter;
 import com.ro0kiey.igank.mvp.view.IListView;
@@ -45,7 +45,8 @@ public class ListActivity extends BaseActivity<ListPresenter> implements IListVi
         super.onCreate(savedInstanceState);
 
         ButterKnife.bind(this);
-        DaggerListComponent.builder().listModule(new ListModule(this, this)).build().inject(this);
+        DaggerActivityComponent.builder().activityModule(new ActivityModule(this, this)).build().injectListActivity(this);
+
         initView();
         initData();
     }
@@ -53,11 +54,6 @@ public class ListActivity extends BaseActivity<ListPresenter> implements IListVi
     @Override
     protected int getLayoutId() {
         return R.layout.activity_list;
-    }
-
-    @Override
-    protected void initPresenter() {
-        //this.mPresenter = new ListPresenter(this, this);
     }
 
     private void initView() {

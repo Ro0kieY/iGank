@@ -14,10 +14,10 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.ro0kiey.igank.Config;
 
-import com.ro0kiey.igank.di.component.DaggerMainComponent;
-import com.ro0kiey.igank.di.module.MainModule;
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.adapter.MeiziAdapter;
+import com.ro0kiey.igank.di.component.DaggerActivityComponent;
+import com.ro0kiey.igank.di.module.ActivityModule;
 import com.ro0kiey.igank.model.Bean.MeiziBean;
 import com.ro0kiey.igank.mvp.presenter.MainPresenter;
 import com.ro0kiey.igank.mvp.view.IMainView;
@@ -69,10 +69,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
-        DaggerMainComponent.builder().mainModule(new MainModule(this, this)).build().inject(this);
+        DaggerActivityComponent.builder().activityModule(new ActivityModule(this, this)).build().injectMainActivity(this);
+
         initView();
         initData();
-
 
     }
 
@@ -84,11 +84,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
-    }
-
-    @Override
-    protected void initPresenter() {
-        //mPresenter = new MainPresenter(this, this);
     }
 
     public void initView() {

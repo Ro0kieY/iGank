@@ -20,10 +20,10 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.ro0kiey.igank.Config;
-import com.ro0kiey.igank.di.component.DaggerGankComponent;
-import com.ro0kiey.igank.di.module.GankModule;
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.adapter.GankAdapter;
+import com.ro0kiey.igank.di.component.DaggerActivityComponent;
+import com.ro0kiey.igank.di.module.ActivityModule;
 import com.ro0kiey.igank.model.Bean.GankBean;
 import com.ro0kiey.igank.mvp.presenter.GankPresenter;
 import com.ro0kiey.igank.mvp.view.IGankView;
@@ -67,7 +67,7 @@ public class GankActivity extends BaseActivity<GankPresenter> implements IGankVi
         super.onCreate(savedInstanceState);
 
         ButterKnife.bind(this);
-        DaggerGankComponent.builder().gankModule(new GankModule(this, this)).build().inject(this);
+        DaggerActivityComponent.builder().activityModule(new ActivityModule(this, this)).build().injectGankActivity(this);
         initView();
         initData();
 
@@ -76,11 +76,6 @@ public class GankActivity extends BaseActivity<GankPresenter> implements IGankVi
     @Override
     protected int getLayoutId() {
         return R.layout.activity_gank;
-    }
-
-    @Override
-    protected void initPresenter() {
-        //this.mPresenter = new GankPresenter(this, this);
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)

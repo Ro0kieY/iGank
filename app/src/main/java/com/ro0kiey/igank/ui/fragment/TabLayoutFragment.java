@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import com.ro0kiey.igank.Config;
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.adapter.ListAdapter;
+import com.ro0kiey.igank.di.component.DaggerFragmentComponent;
+import com.ro0kiey.igank.di.module.FragmentModule;
 import com.ro0kiey.igank.model.Bean.GankBean;
 import com.ro0kiey.igank.mvp.presenter.FragmentPresenter;
 import com.ro0kiey.igank.mvp.view.IFragmentView;
@@ -19,6 +21,8 @@ import com.ro0kiey.igank.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,7 +43,9 @@ public class TabLayoutFragment extends BaseFragment<FragmentPresenter> implement
     private String mParam;
     private List<GankBean> mGankBeanList = new ArrayList<>();
     private int mListCount = Config.LOAD_LIST_COUNT;
-    private FragmentPresenter mPresenter;
+
+    @Inject
+    FragmentPresenter mPresenter;
 
     public static TabLayoutFragment newInstance(String param) {
         TabLayoutFragment fragment = new TabLayoutFragment();
@@ -54,7 +60,7 @@ public class TabLayoutFragment extends BaseFragment<FragmentPresenter> implement
         super.onCreate(savedInstanceState);
 
         ButterKnife.bind(this.getActivity());
-
+        DaggerFragmentComponent.builder().fragmentModule(new FragmentModule(this, this)).build().inject(this);
         if (getArguments() != null) {
             mParam = getArguments().getString("type");
         }

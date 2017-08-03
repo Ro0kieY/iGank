@@ -13,9 +13,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.ro0kiey.igank.Config;
-import com.ro0kiey.igank.di.component.DaggerMeiziComponent;
-import com.ro0kiey.igank.di.module.MeiziModule;
 import com.ro0kiey.igank.R;
+import com.ro0kiey.igank.di.component.DaggerActivityComponent;
+import com.ro0kiey.igank.di.module.ActivityModule;
 import com.ro0kiey.igank.mvp.presenter.MeiziPresenter;
 import com.ro0kiey.igank.mvp.view.IMeiziView;
 import com.ro0kiey.igank.ui.base.BaseActivity;
@@ -45,7 +45,8 @@ public class MeiziActivity extends BaseActivity<MeiziPresenter> implements IMeiz
         super.onCreate(savedInstanceState);
 
         ButterKnife.bind(this);
-        DaggerMeiziComponent.builder().meiziModule(new MeiziModule(this, this)).build().inject(this);
+        DaggerActivityComponent.builder().activityModule(new ActivityModule(this, this)).build().injectMeiziActivity(this);
+
         initView();
 
     }
@@ -53,11 +54,6 @@ public class MeiziActivity extends BaseActivity<MeiziPresenter> implements IMeiz
     @Override
     protected int getLayoutId() {
         return R.layout.activity_meizi;
-    }
-
-    @Override
-    protected void initPresenter() {
-        //this.mPresenter = new MeiziPresenter(this, this);
     }
 
     private void initView() {

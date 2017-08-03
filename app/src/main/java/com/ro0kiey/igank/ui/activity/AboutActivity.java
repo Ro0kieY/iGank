@@ -47,11 +47,6 @@ public class AboutActivity extends BaseActivity<BasePresenter> implements IBaseV
         return R.layout.activity_about;
     }
 
-    @Override
-    protected void initPresenter() {
-
-    }
-
     private void initView() {
         collapsingToolbar.setTitle("About Me");
 
