@@ -1,8 +1,11 @@
 package com.ro0kiey.igank.ui.activity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -23,6 +26,8 @@ import com.ro0kiey.igank.mvp.presenter.MainPresenter;
 import com.ro0kiey.igank.mvp.view.IMainView;
 import com.ro0kiey.igank.ui.base.BaseActivity;
 import com.ro0kiey.igank.ui.widget.IRecyclerView;
+import com.ro0kiey.igank.utils.NetworkUtils;
+import com.ro0kiey.igank.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +76,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
         ButterKnife.bind(this);
         DaggerActivityComponent.builder().activityModule(new ActivityModule(this, this)).build().injectMainActivity(this);
 
+        if (!NetworkUtils.isWIFIConnected(this)){
+            ToastUtils.SnackBarShort(rv_meizi, R.string.no_wifi_connected);
+        }
+
         initView();
         initData();
 
@@ -90,6 +99,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+        actionBar.setDisplayHomeAsUpEnabled(false);
 
         layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         rv_meizi.setFloatActionMenu(fab);

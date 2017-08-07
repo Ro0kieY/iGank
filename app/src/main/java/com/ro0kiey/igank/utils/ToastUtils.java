@@ -1,7 +1,9 @@
 package com.ro0kiey.igank.utils;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Toast;
 
@@ -113,4 +115,5 @@ public class ToastUtils {
     public static void SnackBarWithAction(View view, int resId, int actionResId, View.OnClickListener listener){
         Snackbar.make(view, resId, Snackbar.LENGTH_INDEFINITE).setAction(actionResId, listener).show();
     }
+
 }
