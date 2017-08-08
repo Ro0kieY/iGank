@@ -1,11 +1,9 @@
 package com.ro0kiey.igank.ui.activity;
 
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -16,7 +14,6 @@ import android.view.WindowManager;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.ro0kiey.igank.Config;
-
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.adapter.MeiziAdapter;
 import com.ro0kiey.igank.di.component.DaggerActivityComponent;
@@ -195,6 +192,11 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
                 layoutManager.setSpanCount(1);
                 break;
             case R.id.menu_item_twoColoumLayout:
+                int[] pos = new int[2];
+                layoutManager.findFirstCompletelyVisibleItemPositions(pos);
+                if (pos[0] % 2 == 1){
+                    rv_meizi.smoothScrollToPosition(pos[0] + 1);
+                }
                 layoutManager.setSpanCount(2);
                 break;
         }

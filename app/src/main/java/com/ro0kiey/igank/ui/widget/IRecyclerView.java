@@ -56,15 +56,16 @@ public class IRecyclerView extends RecyclerView {
         }
         manager = getLayoutManager();
         int totalItemCount = manager.getItemCount();
-        if (manager instanceof StaggeredGridLayoutManager){
-            int[] pos = new int[2];
+        int spanCount = ((StaggeredGridLayoutManager)manager).getSpanCount();
+        int[] pos = new int[2];
+        if (spanCount == 2){
             ((StaggeredGridLayoutManager) manager).findLastVisibleItemPositions(pos);
             if (pos[1] >= totalItemCount - (((StaggeredGridLayoutManager) manager).getSpanCount() * 2)) {
                 listener.loadMore();
             }
-        } else if (manager instanceof LinearLayoutManager){
-            int position = ((LinearLayoutManager) manager).findLastVisibleItemPosition();
-            if (position >= totalItemCount - (Config.LOAD_LIST_COUNT / 2)){
+        } else if (spanCount == 1){
+            ((StaggeredGridLayoutManager) manager).findLastVisibleItemPositions(pos);
+            if (pos[0] >= totalItemCount - (Config.LOAD_LIST_COUNT / 2)){
                 listener.loadMore();
             }
         }
