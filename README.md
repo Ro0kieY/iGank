@@ -8,6 +8,7 @@
 ## 知识点
  - [MVP设计模式](https://github.com/Ro0kieY/MVPDemo)
  - Retrofit2 + Rxjava2异步网络请求
+ - Dagger2依赖注入
  - 图片保存到本地
  - 沉浸式状态栏
  - 下拉刷新，上拉加载更多
