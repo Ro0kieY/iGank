@@ -2,6 +2,7 @@ package com.ro0kiey.igank.ui.activity;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -91,8 +92,15 @@ public class GankActivity extends BaseActivity<GankPresenter> implements IGankVi
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rv_gank.setLayoutManager(layoutManager);
         ViewCompat.setTransitionName(imageView, Config.ACTIVITY_IMAGE_TRANS);
-        String meiziUrl = getIntent().getStringExtra("Url");
-        Glide.with(this).load(meiziUrl).centerCrop().into(imageView);
+        if (MainActivity.canGetBitmapFromNetwork){
+            String meiziUrl = getIntent().getStringExtra("Url");
+            Glide.with(this).load(meiziUrl).centerCrop().into(imageView);
+        } else {
+            int red = (int)(Math.random() * 255);
+            int green = (int)(Math.random() * 255);
+            int blue = (int)(Math.random() * 255);
+            imageView.setBackgroundColor(Color.argb(200, red, green, blue));
+        }
     }
 
     private void initData() {

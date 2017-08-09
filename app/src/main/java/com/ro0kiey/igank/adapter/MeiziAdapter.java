@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,6 +19,7 @@ import com.ro0kiey.igank.Config;
 import com.ro0kiey.igank.R;
 import com.ro0kiey.igank.model.Bean.MeiziBean;
 import com.ro0kiey.igank.ui.activity.GankActivity;
+import com.ro0kiey.igank.ui.activity.MainActivity;
 import com.ro0kiey.igank.ui.activity.MeiziActivity;
 
 import java.util.List;
@@ -68,19 +68,18 @@ public class MeiziAdapter extends RecyclerView.Adapter<MeiziAdapter.ViewHolder> 
             }
         });
         holder.imageView.setBackgroundColor(Color.argb(200, red, green, blue));
-        Glide.with(mContext).load(meizi.getUrl()).centerCrop().crossFade().into(holder.imageView);
-        holder.imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(mContext, MeiziActivity.class);
-                intent.putExtra("Url", meizi.getUrl());
-                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity)mContext, v, Config.ACTIVITY_IMAGE_TRANS);
-                ActivityCompat.startActivity(mContext, intent, options.toBundle());
-            }
-        });
-
-        //runEnterAnimation(holder, position);
+        if (MainActivity.canGetBitmapFromNetwork){
+            Glide.with(mContext).load(meizi.getUrl()).centerCrop().crossFade().into(holder.imageView);
+            holder.imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, MeiziActivity.class);
+                    intent.putExtra("Url", meizi.getUrl());
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity)mContext, v, Config.ACTIVITY_IMAGE_TRANS);
+                    ActivityCompat.startActivity(mContext, intent, options.toBundle());
+                }
+            });
+        }
     }
 
     @Override
@@ -96,8 +95,6 @@ public class MeiziAdapter extends RecyclerView.Adapter<MeiziAdapter.ViewHolder> 
         TextView textViewWho;
         TextView textViewDesc;
 
-
-
         public ViewHolder(final View itemView) {
             super(itemView);
             textLayout = (LinearLayout)itemView.findViewById(R.id.text_layout);
@@ -105,46 +102,6 @@ public class MeiziAdapter extends RecyclerView.Adapter<MeiziAdapter.ViewHolder> 
             textViewDate = (TextView)itemView.findViewById(R.id.rv_meizi_text_date);
             textViewWho = (TextView)itemView.findViewById(R.id.rv_meizi_text_who);
             textViewDesc = (TextView)itemView.findViewById(R.id.rv_meizi_text_desc);
-        }
-    }
-
-    private void runEnterAnimation(ViewHolder holder, int position) {
-        if (position % 2 == 0){
-            holder.itemView.setTranslationX(-500);//相对于原始位置左方500
-            holder.itemView.setAlpha(0f);//完全透明
-            //每个item项两个动画，从透明到不透明，从下方移动到原来的位置
-            //并且根据item的位置设置延迟的时间，达到一个接着一个的效果
-            holder.itemView.animate()
-                    .translationX(0).alpha(1f)//设置最终效果为完全不透明，并且在原来的位置
-                    //.setStartDelay(200 * (position))//根据item的位置设置延迟时间，达到依次动画一个接一个进行的效果
-                    .setInterpolator(new DecelerateInterpolator(0.5f))//设置动画效果为在动画开始的地方快然后慢
-                    .setDuration(400)
-                    /*.setListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            //animationsLocked = true;
-                            //firstTimeAnimate = false;//确保仅屏幕一开始能够显示的item项才开启动画，也就是说屏幕下方还没有显示的item项滑动时是没有动画效果
-                        }
-                    })*/
-                    .start();
-        } else {
-            holder.itemView.setTranslationX(500);//相对于原始位置下方500
-            holder.itemView.setAlpha(0f);//完全透明
-            //每个item项两个动画，从透明到不透明，从下方移动到原来的位置
-            //并且根据item的位置设置延迟的时间，达到一个接着一个的效果
-            holder.itemView.animate()
-                    .translationX(0).alpha(1f)//设置最终效果为完全不透明，并且在原来的位置
-                    //.setStartDelay(200 * (position))//根据item的位置设置延迟时间，达到依次动画一个接一个进行的效果
-                    .setInterpolator(new DecelerateInterpolator(0.5f))//设置动画效果为在动画开始的地方快然后慢
-                    .setDuration(400)
-                    /*.setListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            //animationsLocked = true;
-                            //firstTimeAnimate = false;//确保仅屏幕一开始能够显示的item项才开启动画，也就是说屏幕下方还没有显示的item项滑动时是没有动画效果
-                        }
-                    })*/
-                    .start();
         }
     }
 }

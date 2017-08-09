@@ -69,6 +69,7 @@ public class IRecyclerView extends RecyclerView {
                 listener.loadMore();
             }
         }
+
     }
 
     public interface LoadMoreListener{

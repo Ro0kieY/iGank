@@ -1,9 +1,10 @@
 package com.ro0kiey.igank.ui.activity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -24,7 +25,6 @@ import com.ro0kiey.igank.mvp.view.IMainView;
 import com.ro0kiey.igank.ui.base.BaseActivity;
 import com.ro0kiey.igank.ui.widget.IRecyclerView;
 import com.ro0kiey.igank.utils.NetworkUtils;
-import com.ro0kiey.igank.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +65,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
     private MeiziAdapter adapter;
     private int count = Config.LOAD_IMAGE_COUNT;
     private StaggeredGridLayoutManager layoutManager;
+    public static boolean canGetBitmapFromNetwork = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +75,24 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
         DaggerActivityComponent.builder().activityModule(new ActivityModule(this, this)).build().injectMainActivity(this);
 
         if (!NetworkUtils.isWIFIConnected(this)){
-            ToastUtils.SnackBarShort(rv_meizi, R.string.no_wifi_connected);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.no_wifi_connected);
+            builder.setTitle(R.string.warning);
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    canGetBitmapFromNetwork = true;
+                    initData();
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    canGetBitmapFromNetwork = false;
+                }
+            });
+            builder.show();
+            //ToastUtils.SnackBarShort(rv_meizi, R.string.no_wifi_connected);
         }
 
         initView();
@@ -164,6 +182,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
                 mPresenter.toAboutActivity();
                 break;
             case R.id.refresh:
+                if (NetworkUtils.isWIFIConnected(this)){
+                    canGetBitmapFromNetwork = true;
+                }
                 count = Config.LOAD_IMAGE_COUNT;
                 mPresenter.refreshMeiziData(count, Config.LOAD_IMAGE_PAGE);
                 layoutManager.smoothScrollToPosition(rv_meizi, null, 0);

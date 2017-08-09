@@ -3,6 +3,7 @@ package com.ro0kiey.igank.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,7 +80,7 @@ public class TabLayoutFragment extends BaseFragment<FragmentPresenter> implement
     @Override
     protected void initView() {
         recyclerView = (IRecyclerView) view.findViewById(R.id.fragment_recyclerview);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLoadMoreListener(new IRecyclerView.LoadMoreListener() {
             @Override
             public void loadMore() {

@@ -8,6 +8,7 @@
     <string name="load_list_failed">无法获得更多内容...</string>
 
     <string name="no_wifi_connected">您正在非Wifi环境下浏览...</string>
+    <string name="warning">注意</string>
 
     <string name="save_success">成功收下妹纸...</string>
     <string name="already_saved">不要再点了，妹纸已经躺在图库里了...</string>
